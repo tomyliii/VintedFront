@@ -10,7 +10,7 @@ const SearchByBrand = () => {
   useEffect(() => {
     (async () => {
       const response = await axios.get(
-        "https://site--vintedback--tzmxcvqjqbzq.code.run//offers/all"
+        "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/all"
       );
       setData(response.data.data);
     })();
