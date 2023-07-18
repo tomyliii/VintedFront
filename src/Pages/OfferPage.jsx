@@ -36,7 +36,9 @@ const OfferPage = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get(`http://127.0.0.1:3000/offer/${id}`);
+      const response = await axios.get(
+        `https://site--vintedback--tzmxcvqjqbzq.code.run/offer/${id}`
+      );
       const ownerItems = await axios.get(
         `https://site--vintedback--tzmxcvqjqbzq.code.run/offersofowner/${id}`
       );
