@@ -1,0 +1,327 @@
+.wrapper {
+  width: 1130px;
+  margin: 0 auto;
+}
+
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+.hero {
+  width: 100%;
+  position: relative;
+}
+.dechirer {
+  position: absolute;
+  width: 50%;
+  right: 0;
+  bottom: 0;
+}
+.image-hero {
+  width: 100%;
+  object-fit: cover;
+  height: 430px;
+}
+
+.bloc-top {
+  width: 380px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 35px;
+  gap: 15px;
+  border-radius: 5px;
+  position: absolute;
+  top: 15%;
+}
+
+.bloc-top > button {
+  height: 40px;
+  background-color: #007580;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+.bloc-top > a {
+  color: #80bbc0;
+}
+
+h2 {
+  font-family: maison-neue-bold, sans-serif;
+  font-size: 38px;
+  margin-bottom: 25px;
+}
+
+h3 {
+  font-family: maison-neue-bold, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+p {
+  font-family: maison-neue, sans-serif;
+  font-size: 14px;
+}
+
+.info {
+  font-family: maison-neue, sans-serif;
+  font-size: 12px;
+  color: #757575;
+}
+
+button {
+  font-family: maison-neue-bold, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+a {
+  font-family: maison-neue, sans-serif;
+  font-size: 14px;
+}
+
+.offer-page {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+}
+
+.offer-page > div {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  gap: 20px;
+}
+/*--------------------------offer page--------------------------------------------------------- */
+.offer-page > div > div {
+  flex: 3;
+}
+.offer-page > div > section:first-of-type {
+  width: 100%;
+}
+.offer-page .item-pictures {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  display: flex;
+  gap: 20px;
+}
+.offer-page .item-pictures > div {
+  flex-shrink: 0;
+  width: calc((100% - 40px) / 2.5);
+}
+.offer-page .item-pictures img {
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 0.6;
+}
+
+.offer-page > div > div > div {
+  background-color: white;
+  padding: 20px 25px;
+  margin: 30px 0;
+}
+
+.offer-page > div > div > .owner-offers {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.offer-page .owner-offers > .item-card {
+  width: calc((100% - 60px) / 5);
+  margin-bottom: 35px;
+  color: black;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.owner-offers .item-card .item-image {
+  width: 100%;
+}
+
+.owner-offers .item-image > img {
+  width: 100%;
+  aspect-ratio: 0.65;
+  object-fit: cover;
+}
+.owner-offers .item-card .owner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.owner-offers .item-card .owner > div > .icon-standar {
+  background-color: #007580;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  text-align: center;
+}
+
+.owner-offers > div > img {
+  object-fit: cover;
+  width: 25px;
+  border-radius: 50%;
+}
+
+.owner-offers .item-card div:last-of-type {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/*----------------------offer page aside---------------------------------------------------------*/
+.offer-page > div > aside {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.offer-page > div > aside > section {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 20px;
+  gap: 20px;
+}
+
+.offer-page aside .item-infos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.offer-page .item-infos .item-price {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: maison-neue-bold, sans-serif;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  padding-bottom: 20px;
+}
+.offer-page .item-infos .item-details {
+  font-family: maison-neue, sans-serif;
+  font-size: 12px;
+  color: #757575;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  padding-bottom: 20px;
+}
+
+.offer-page .item-details > p {
+  display: flex;
+  justify-content: space-between;
+}
+.offer-page .item-details > p > span:first-child {
+  text-align: left;
+}
+.offer-page .item-details > p > span:last-child {
+  text-align: right;
+}
+
+.offer-page .item-description {
+  color: #171717;
+  font-size: 16px;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  padding-bottom: 20px;
+}
+.offer-page .item-send-info {
+  padding-bottom: 20px;
+}
+
+.offer-page .item-send-info > p {
+  display: flex;
+  justify-content: space-between;
+}
+.offer-page .item-send-info > p > span:first-child {
+  text-align: left;
+  text-transform: uppercase;
+}
+.offer-page .item-send-info > p > span:last-child {
+  text-align: right;
+  color: #757575;
+}
+.offer-page .item-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.offer-page .item-buttons button {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: white;
+  border: #007782 1px solid;
+  border-radius: 5px;
+  color: #007782;
+}
+.offer-page .item-buttons button:first-child {
+  background-color: #007782;
+  border: #007782 1px solid;
+
+  color: white;
+}
+
+.offer-page .item-buttons button:last-child {
+  background-color: white;
+  border: #757575 1px solid;
+
+  color: #757575;
+}
+
+.offer-page .item-protect-customer {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+.offer-page .item-protect-customer > div:first-of-type {
+  padding: 10px;
+  color: #007782;
+  background-color: #83c7cd;
+  border-radius: 50%;
+}
+.offer-page .item-protect-customer h3 {
+  font-size: 16px;
+}
+
+.offer-page .item-protect-customer p {
+  color: #757575;
+}
+
+.offer-page .item-protect-customer a {
+  color: #007580;
+}
+
+.offer-page aside > section:last-child > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.offer-page aside > section:last-child > div > .icon-standar {
+  background-color: #007580;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  text-align: center;
+}
+
+.offer-page aside > section:last-child > div img {
+  object-fit: cover;
+  width: 25px;
+  border-radius: 50%;
+}
+@media (max-width: 1170px) {
+  .wrapper {
+    width: calc(100% - 40px);
+    /* width: 100vw; */
+    margin: 0 20px;
+  }
+}

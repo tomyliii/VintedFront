@@ -1,0 +1,51 @@
+.popular {
+  /* margin-top: 35px; */
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.popular > div {
+  display: flex;
+  gap: 15px;
+  overflow: hidden;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.popular .item-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: black;
+}
+
+.popular .item-card > div:first-of-type > img {
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 0.6;
+}
+.popular .item-card > div:last-of-type {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popular .last-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eeeeee;
+  color: rgb(155, 155, 155);
+  text-decoration: none;
+}
+
+.popular a[class*="card"] {
+  width: calc((100% - 75px) / 6);
+}

@@ -1,0 +1,78 @@
+header {
+  background-color: white;
+}
+
+header > section {
+  border-bottom: 1px solid rgb(228, 228, 228);
+}
+
+header > section > div:first-of-type {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+header > section > div:first-of-type img {
+  width: 100px;
+}
+
+header > section > div:first-of-type > div:last-of-type {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  justify-content: space-between;
+  background-color: white;
+  width: 100%;
+}
+header form > input {
+  width: 100%;
+  height: 30px;
+  background-image: url("../../assets/Images/loupe.jpg");
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: 7px 7px;
+  border: 1px black solid;
+  padding-left: 40px;
+  border-radius: 5px;
+}
+header form {
+  flex: 3;
+  height: 30px;
+}
+.header-btn {
+  display: flex;
+  gap: 10px;
+}
+
+.header-btn > button {
+  background-color: white;
+  border: #007782 1px solid;
+  border-radius: 5px;
+  color: #007782;
+  height: 30px;
+}
+
+.header-btn > button:nth-child(2) {
+  background-color: #007782;
+  border: #007782 1px solid;
+
+  color: white;
+}
+.header-btn > button:last-of-type {
+  border-radius: 50%;
+  color: #757575;
+  border: #757575 1px solid;
+  width: 30px;
+  height: 30px;
+}
+header > nav:last-of-type > ul {
+  display: flex;
+  font-family: maison-neue, sans-serif;
+  color: #757575;
+}
+
+header > nav:last-of-type li:not(li:first-child) {
+  padding: 10px;
+}
+header > nav:last-of-type li:first-child {
+  padding: 10px 10px 10px 0;
+}

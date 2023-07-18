@@ -1,0 +1,28 @@
+.brands-section {
+  /* margin-top: 35px; */
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.brands-section > div:last-of-type {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.brands-section > div:last-of-type > a {
+  text-decoration: none;
+  padding: 10px 15px;
+  font-family: maison-neue-bold, sans-serif;
+  font-size: 14px;
+  color: black;
+  border: 1px solid rgb(215, 215, 215);
+  background-color: rgb(252, 252, 252);
+  border-radius: 5px;
+}
+
+.brands-section > a:hover {
+  background-color: rgb(224, 224, 224);
+}
