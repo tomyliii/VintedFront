@@ -12,7 +12,8 @@ const NewsFeed = () => {
   useEffect(() => {
     (async () => {
       const response = await axios.get(
-        "http://127.0.0.1:3000/offers/offers/?page=" + selectedPage
+        "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/offers/?page=" +
+          selectedPage
       );
       setData(response.data.data);
       console.log(response.data.count);
