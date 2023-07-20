@@ -10,39 +10,51 @@ const NewsFeed = () => {
   const [selectedPage, setSelectedPage] = useState(1);
   const [pages, setPages] = useState([]);
   useEffect(() => {
-    (async () => {
-      const response = await axios.get(
-        "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/offers/?page=" +
-          selectedPage
-      );
-      setData(response.data.data);
-      console.log(response.data.count);
-      const numberOfPage = Math.floor(response.data.count / 20);
-      const ArrayOfPages = [];
+    try {
+      (async () => {
+        // const response = await axios.get(
+        //   "  http://127.0.0.1:3000/offers/offers/?page=" + selectedPage
+        // );
+        const response = await axios.get(
+          "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/offers/?page=" +
+            selectedPage
+        );
+        setData(response.data.data);
+        const numberOfPage = Math.floor(response.data.count / 20);
+        const ArrayOfPages = [];
 
-      for (let i = 0; i <= numberOfPage; i++) {
-        ArrayOfPages.push(i + 1);
-      }
-      setPages(ArrayOfPages);
-      console.log(ArrayOfPages, response.data.count);
-    })();
-    setIsReady(true);
+        for (let i = 0; i <= numberOfPage; i++) {
+          ArrayOfPages.push(i + 1);
+        }
+        setPages(ArrayOfPages);
+      })();
+      setIsReady(true);
+    } catch (error) {
+      console.log(error.message);
+    }
   }, []);
 
   const handleOnClick = (value) => {
-    (async () => {
-      const response = await axios.get(
-        "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/offers/?page=" +
-          value
-      );
-      setData(response.data.data);
-      setSelectedPage(value);
-    })();
+    try {
+      (async () => {
+        // const response = await axios.get(
+        //   "http://127.0.0.1:3000/offers/offers/?page=" + value
+        // );
+        const response = await axios.get(
+          "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/offers/?page=" +
+            value
+        );
+        setData(response.data.data);
+        setSelectedPage(value);
+      })();
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return isReady === false ? (
-    <div>
-      <p>Downloading, please wait...</p>
+    <div className="loading">
+      <p>Loading, please wait...</p>
     </div>
   ) : (
     <section className="news-feed-section wrapper">
@@ -94,7 +106,7 @@ const NewsFeed = () => {
               </div>
               <div>
                 <p>{item.product_name}</p>
-                <p className="info">{item.product_price}</p>
+                <p className="info">{item.product_price} €</p>
                 <p className="info">{item.product_details[0].size}</p>
                 {/* <p className="info">{item.owner.username}</p> */}
               </div>

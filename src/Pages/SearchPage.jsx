@@ -5,20 +5,25 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 const SearchPage = () => {
-  // const [data,setData]=useState({})
-
   const { brand } = useParams();
   const [data, setData] = useState([]);
   useEffect(() => {
-    (async () => {
-      const response = await axios.get(
-        `https://site--vintedback--tzmxcvqjqbzq.code.run/offers?brand=${brand}`
-      );
+    try {
+      (async () => {
+        // const response = await axios.get(
+        //   ` http://127.0.0.1:3000/offers?brand=${brand}`
+        // );
+        const response = await axios.get(
+          `https://site--vintedback--tzmxcvqjqbzq.code.run/offers?brand=${brand}`
+        );
 
-      setData(response.data.offers);
-    })();
+        setData(response.data.offers);
+      })();
+    } catch (error) {
+      console.log(error.message);
+    }
   }, []);
-  console.log(data);
+
   return (
     <section className="news-feed-section wrapper">
       <h3>Fil d'actu</h3>
@@ -69,7 +74,7 @@ const SearchPage = () => {
               </div>
               <div>
                 <p>{item.product_name}</p>
-                <p className="info">{item.product_price}</p>
+                <p className="info">{item.product_price} €</p>
                 <p className="info">{item.product_details[0].size}</p>
                 {/* <p className="info">{item.owner.username}</p> */}
               </div>

@@ -35,25 +35,33 @@ const OfferPage2 = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      const response = await axios.get(
-        `https://site--vintedback--tzmxcvqjqbzq.code.run/offer/${id}`
-      );
-      const ownerItems = await axios.get(
-        `https://site--vintedback--tzmxcvqjqbzq.code.run/offersofowner/${id}`
-      );
-      setCount(ownerItems.data.data.count);
-      setItems(ownerItems.data.data.offers);
-      setItem(response.data.data);
-      const arrayOfImages = getImages(response.data.data);
-      setImage(arrayOfImages);
-      setIsReady(true);
-    })();
+    try {
+      (async () => {
+        // const response = await axios.get(`  http://127.0.0.1:3000/offer/${id}`);
+        // const ownerItems = await axios.get(
+        //   `  http://127.0.0.1:3000/offersofowner/${id}`
+        // );
+        const response = await axios.get(
+          `https://site--vintedback--tzmxcvqjqbzq.code.run/offer/${id}`
+        );
+        const ownerItems = await axios.get(
+          `https://site--vintedback--tzmxcvqjqbzq.code.run/offersofowner/${id}`
+        );
+        setCount(ownerItems.data.data.count);
+        setItems(ownerItems.data.data.offers);
+        setItem(response.data.data);
+        const arrayOfImages = getImages(response.data.data);
+        setImage(arrayOfImages);
+        setIsReady(true);
+      })();
+    } catch (error) {
+      console.log(error.message);
+    }
   }, []);
 
   return isReady === false ? (
-    <div>
-      <p>Downloading, please wait...</p>
+    <div className="loading">
+      <p>Loading, please wait...</p>
     </div>
   ) : (
     <main className="offer-page">
@@ -101,7 +109,7 @@ const OfferPage2 = () => {
                   </div>
                   <div>
                     <p>{item.product_name}</p>
-                    <p className="info">{item.product_price}</p>
+                    <p className="info">{item.product_price} €</p>
                     <p className="info">{item.product_details[0].size}</p>
                     {/* <p className="info">{item.owner.username}</p> */}
                   </div>

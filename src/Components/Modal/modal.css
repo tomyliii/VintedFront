@@ -1,0 +1,95 @@
+.modal {
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.401);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  z-index: 2;
+  width: 100vw;
+  border-radius: 5px;
+}
+.modal > div > p {
+  font-size: 24px;
+  text-align: center;
+}
+.modal > div {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 500px;
+  overflow-y: scroll;
+  padding: 20px;
+}
+.modal > div > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.modal > div > button:first-of-type {
+  align-self: self-end;
+  border: none;
+  background-color: white;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+.modal form > div {
+  width: 100%;
+  position: relative;
+}
+
+.modal input[type="text"],
+.modal input[type="password"],
+.modal input[type="email"] {
+  padding: 10px 0;
+  border: none;
+  width: 100%;
+  border-bottom: 1px solid #757575;
+  font-size: 16px;
+}
+
+.eye {
+  position: absolute;
+  right: 5px;
+  font-size: 18px;
+  top: 22%;
+}
+
+form .info {
+  margin-top: 5px;
+}
+
+.error {
+  color: red;
+}
+
+.checkbox-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.modal input[type="submit"] {
+  width: 100%;
+  background-color: #007580;
+  padding: 10px;
+  font-size: 18px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+}
+input[type="checkbox"]:checked {
+  background-color: #007580;
+  color: white;
+}

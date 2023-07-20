@@ -1,7 +1,11 @@
 // import { link } from "react-router-dom";
 
 const PageNotFound = () => {
-  return;
+  return (
+    <div>
+      <p>Page note found</p>
+    </div>
+  );
 };
 
 export default PageNotFound;

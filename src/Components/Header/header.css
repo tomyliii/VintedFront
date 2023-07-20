@@ -1,5 +1,6 @@
 header {
   background-color: white;
+  z-index: 1;
 }
 
 header > section {

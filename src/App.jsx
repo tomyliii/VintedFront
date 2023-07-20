@@ -12,8 +12,8 @@ import OfferPage2 from "./Pages/OfferPage2";
 function App() {
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/product/:id" element={<OfferPage />}></Route>

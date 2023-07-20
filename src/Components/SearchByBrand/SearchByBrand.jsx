@@ -8,13 +8,18 @@ const SearchByBrand = () => {
   const brands = [];
 
   useEffect(() => {
-    (async () => {
-      const response = await axios.get(
-        "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/all"
-      );
-      setData(response.data.data);
-    })();
-    setIsReady(true);
+    try {
+      (async () => {
+        const response = await axios.get(
+          "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/all"
+        );
+        // const response = await axios.get("http://127.0.0.1:3000/offers/all");
+        setData(response.data.data);
+      })();
+      setIsReady(true);
+    } catch (error) {
+      console.log(error.message);
+    }
   }, []);
 
   if (data.length !== 0) {
@@ -26,8 +31,8 @@ const SearchByBrand = () => {
   }
 
   return isReady === false ? (
-    <div>
-      <p>Downloading, please wait...</p>
+    <div className="loading">
+      <p>Loading, please wait...</p>
     </div>
   ) : (
     <section className="brands-section wrapper">

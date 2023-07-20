@@ -8,18 +8,25 @@ const PopularItems = () => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const response = await axios.get(
-        "https://site--vintedback--tzmxcvqjqbzq.code.run/offerspopular"
-      );
-      setData(response.data.data);
-    })();
-    setIsReady(true);
+    try {
+      (async () => {
+        // const response = await axios.get(
+        //   " http://127.0.0.1:3000/offerspopular"
+        // );
+        const response = await axios.get(
+          "https://site--vintedback--tzmxcvqjqbzq.code.run/offerspopular"
+        );
+        setData(response.data.data);
+      })();
+      setIsReady(true);
+    } catch (error) {
+      console.log(error.message);
+    }
   }, []);
 
   return isReady === false ? (
-    <div>
-      <p>Downloading, please wait...</p>
+    <div className="loading">
+      <p>Loading, please wait...</p>
     </div>
   ) : (
     <section className="popular wrapper">
@@ -56,7 +63,7 @@ const PopularItems = () => {
               </div>
               <div>
                 <p>{item.product_name}</p>
-                <p className="info">{item.product_price}</p>
+                <p className="info">{item.product_price} €</p>
                 <p className="info">{item.product_details[0].size}</p>
                 <p className="info">{item.owner.username}</p>
               </div>
