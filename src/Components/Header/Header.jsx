@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/Images/logoVinted.svg";
 import Modal from "../Modal/Modal";
 import { useEffect, useState } from "react";
-const Header = () => {
+const Header = (props) => {
   const [displayModal, setDisplayModal] = useState(false);
   useEffect(() => {
     displayModal === true
@@ -58,7 +58,11 @@ const Header = () => {
         </nav>
       </header>
       {displayModal && (
-        <Modal setDisplayModal={setDisplayModal} displayModal={displayModal} />
+        <Modal
+          setDisplayModal={setDisplayModal}
+          displayModal={displayModal}
+          serverURI={props.serverURI}
+        />
       )}
     </>
   );

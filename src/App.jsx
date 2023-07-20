@@ -8,18 +8,31 @@ import OfferPage from "./Pages/OfferPage";
 import SearchPage from "./Pages/SearchPage";
 import PageNotFound from "./Pages/PageNotFound";
 import OfferPage2 from "./Pages/OfferPage2";
-
+// const serverURI = "http://127.0.0.1:3000";
+const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
 function App() {
   return (
     <>
       <Router>
-        <Header />
+        <Header serverURI={serverURI} />
         <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/product/:id" element={<OfferPage />}></Route>
-          <Route path="/product2/:id" element={<OfferPage2 />}></Route>
-          <Route path="/SearchPage/:brand" element={<SearchPage />}></Route>
-          <Route path="*" element={<PageNotFound />}></Route>
+          <Route path="/" element={<HomePage serverURI={serverURI} />}></Route>
+          <Route
+            path="/product/:id"
+            element={<OfferPage serverURI={serverURI} />}
+          ></Route>
+          <Route
+            path="/product2/:id"
+            element={<OfferPage2 serverURI={serverURI} />}
+          ></Route>
+          <Route
+            path="/SearchPage/:brand"
+            element={<SearchPage serverURI={serverURI} />}
+          ></Route>
+          <Route
+            path="*"
+            element={<PageNotFound serverURI={serverURI} />}
+          ></Route>
         </Routes>
       </Router>
     </>

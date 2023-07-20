@@ -2,7 +2,7 @@ import "./searchByBrand.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const SearchByBrand = () => {
+const SearchByBrand = (props) => {
   const [data, setData] = useState([]);
   const [isReady, setIsReady] = useState(false);
   const brands = [];
@@ -10,10 +10,8 @@ const SearchByBrand = () => {
   useEffect(() => {
     try {
       (async () => {
-        const response = await axios.get(
-          "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/all"
-        );
-        // const response = await axios.get("http://127.0.0.1:3000/offers/all");
+        const response = await axios.get(`${props.serverURI}/offers/all`);
+
         setData(response.data.data);
       })();
       setIsReady(true);

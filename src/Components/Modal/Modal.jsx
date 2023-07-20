@@ -32,13 +32,8 @@ const Modal = (props) => {
     }
     try {
       (async () => {
-        // const response = await axios.get(
-        //   ` http://127.0.0.1:3000/user/${value}`
-        // );
-        const response = await axios.get(
-          `https://site--vintedback--tzmxcvqjqbzq.code.run/user/${value}`
-        );
-        console.log(response.data);
+        const response = await axios.get(`${props.serverURI}/user/${value}`);
+
         if (response.data.response === true) {
           setErrorUsername(response.data.message);
         } else {
@@ -124,25 +119,13 @@ const Modal = (props) => {
     ) {
       try {
         (async () => {
-          // const response = await axios.post(
-          //   ` http://127.0.0.1:3000/user/signup`,
-          //   {
-          //     newsletter: newsLetter,
-          //     name: username,
-          //     mail: mail,
-          //     password: password,
-          //   }
-          // );
-          const response = await axios.get(
-            `https://site--vintedback--tzmxcvqjqbzq.code.run/user/signup`,
-            {
-              newsletter: newsLetter,
-              name: username,
-              mail: mail,
-              password: password,
-            }
-          );
-
+          const response = await axios.post(`${props.serverURI}/user/signup`, {
+            newsletter: newsLetter,
+            name: username,
+            mail: mail,
+            password: password,
+          });
+          console.log(response);
           document.cookie = ` token = ${response.data.token}; path=/;max-age=3600;secure;samesite=strict;httpOnly:true`;
           setUsername("");
           setMail("");

@@ -4,17 +4,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-const SearchPage = () => {
+const SearchPage = (props) => {
   const { brand } = useParams();
   const [data, setData] = useState([]);
   useEffect(() => {
     try {
       (async () => {
-        // const response = await axios.get(
-        //   ` http://127.0.0.1:3000/offers?brand=${brand}`
-        // );
         const response = await axios.get(
-          `https://site--vintedback--tzmxcvqjqbzq.code.run/offers?brand=${brand}`
+          `${props.serverURI}/offers?brand=${brand}`
         );
 
         setData(response.data.offers);

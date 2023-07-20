@@ -4,7 +4,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-const NewsFeed = () => {
+const NewsFeed = (props) => {
   const [data, setData] = useState([]);
   const [isReady, setIsReady] = useState(false);
   const [selectedPage, setSelectedPage] = useState(1);
@@ -16,8 +16,7 @@ const NewsFeed = () => {
         //   "  http://127.0.0.1:3000/offers/offers/?page=" + selectedPage
         // );
         const response = await axios.get(
-          "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/offers/?page=" +
-            selectedPage
+          `${props.serverURI}/offers/offers/?page=${selectedPage}`
         );
         setData(response.data.data);
         const numberOfPage = Math.floor(response.data.count / 20);
@@ -41,8 +40,7 @@ const NewsFeed = () => {
         //   "http://127.0.0.1:3000/offers/offers/?page=" + value
         // );
         const response = await axios.get(
-          "https://site--vintedback--tzmxcvqjqbzq.code.run/offers/offers/?page=" +
-            value
+          `${props.serverURI}/offers/offers/?page=${value}`
         );
         setData(response.data.data);
         setSelectedPage(value);

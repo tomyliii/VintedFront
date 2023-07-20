@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const OfferPage = () => {
+const OfferPage = (props) => {
   const [isReady, setIsReady] = useState(false);
   const { id } = useParams();
   const [item, setItem] = useState({});
@@ -41,11 +41,9 @@ const OfferPage = () => {
         // const ownerItems = await axios.get(
         //   `  http://127.0.0.1:3000/offersofowner/${id}`
         // );
-        const response = await axios.get(
-          `https://site--vintedback--tzmxcvqjqbzq.code.run/offer/${id}`
-        );
+        const response = await axios.get(`${props.serverURI}/offer/${id}`);
         const ownerItems = await axios.get(
-          `https://site--vintedback--tzmxcvqjqbzq.code.run/offersofowner/${id}`
+          `${props.serverURI}/offersofowner/${id}`
         );
         setCount(ownerItems.data.data.count);
         setItems(ownerItems.data.data.offers);

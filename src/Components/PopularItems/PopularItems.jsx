@@ -3,7 +3,7 @@ import axios from "axios";
 import "./popularItems.css";
 import { Link } from "react-router-dom";
 
-const PopularItems = () => {
+const PopularItems = (props) => {
   const [data, setData] = useState([]);
   const [isReady, setIsReady] = useState(false);
 
@@ -13,9 +13,7 @@ const PopularItems = () => {
         // const response = await axios.get(
         //   " http://127.0.0.1:3000/offerspopular"
         // );
-        const response = await axios.get(
-          "https://site--vintedback--tzmxcvqjqbzq.code.run/offerspopular"
-        );
+        const response = await axios.get(`${props.serverURI}/offerspopular`);
         setData(response.data.data);
       })();
       setIsReady(true);
@@ -44,7 +42,7 @@ const PopularItems = () => {
               return arrayOfImages;
             } else {
               arrayOfImages.push(
-                "https://media.istockphoto.com/id/915938072/fr/vectoriel/dessin-anim%C3%A9-t-shirt-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=8J-kNlljXrjdH5tK3kZOfm46yVa8ZCRs3_bu9w3YqqA="
+                `https://media.istockphoto.com/id/915938072/fr/vectoriel/dessin-anim%C3%A9-t-shirt-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=8J-kNlljXrjdH5tK3kZOfm46yVa8ZCRs3_bu9w3YqqA=`
               );
               return arrayOfImages;
             }

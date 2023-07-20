@@ -4,7 +4,7 @@ import SearchSuggestions from "../Components/SearchSuggestions/SearchSuggestions
 import NewsFeed from "../Components/NewsFeed/NewsFeed";
 import PopularItems from "../Components/PopularItems/PopularItems";
 import Dechirer from "../assets/Images/dechirer.svg";
-const HomePage = () => {
+const HomePage = (props) => {
   return (
     <main>
       <section className="hero">
@@ -31,10 +31,10 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <PopularItems />
-      <SearchByBrand />
+      <PopularItems serverURI={props.serverURI} />
+      <SearchByBrand serverURI={props.serverURI} />
       {/* <SearchSuggestions /> */}
-      <NewsFeed />
+      <NewsFeed serverURI={props.serverURI} />
     </main>
   );
 };
