@@ -81,7 +81,7 @@ header > nav:last-of-type li:first-child {
 .message-login {
   color: white;
   background-color: #007782;
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   left: 50%;
   translate: -50%;
