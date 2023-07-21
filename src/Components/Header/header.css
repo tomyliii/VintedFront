@@ -77,3 +77,21 @@ header > nav:last-of-type li:not(li:first-child) {
 header > nav:last-of-type li:first-child {
   padding: 10px 10px 10px 0;
 }
+
+.message-login {
+  color: white;
+  background-color: #007782;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  translate: -50%;
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow: 0px 0px 5px #002f34;
+}
+
+header .header-btn .disconnect-btn {
+  background-color: rgb(255, 17, 17);
+  border: none;
+  color: white;
+}

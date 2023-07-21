@@ -37,10 +37,6 @@ const OfferPage = (props) => {
   useEffect(() => {
     try {
       (async () => {
-        // const response = await axios.get(`  http://127.0.0.1:3000/offer/${id}`);
-        // const ownerItems = await axios.get(
-        //   `  http://127.0.0.1:3000/offersofowner/${id}`
-        // );
         const response = await axios.get(`${props.serverURI}/offer/${id}`);
         const ownerItems = await axios.get(
           `${props.serverURI}/offersofowner/${id}`

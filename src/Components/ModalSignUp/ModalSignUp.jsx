@@ -1,9 +1,10 @@
 import { useState } from "react";
-import "./modal.css";
+import "./modalSignUp.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 const Modal = (props) => {
   const [username, setUsername] = useState("");
   const [mail, setMail] = useState("");
@@ -17,12 +18,14 @@ const Modal = (props) => {
   const [conditions, setConditions] = useState(false);
   const [newsLetter, setNewsLetter] = useState(false);
   const [errorConditions, setErrorConditions] = useState("");
+
   const navigate = useNavigate();
+
   const handleOnChange = (set, value) => {
     set(!value);
   };
 
-  const checkUsername = (value) => {
+  const checkUsername = async (value) => {
     const regexGlobal = new RegExp("[a-zA-Z0-9]{3,}");
     if (value === "") {
       return setErrorUsername("Votre nom d'utilisateur ne peut etre vide.");
@@ -31,16 +34,14 @@ const Modal = (props) => {
       return setErrorUsername("Votre doit contenir au moins trois caractères.");
     }
     try {
-      (async () => {
-        const response = await axios.get(`${props.serverURI}/user/${value}`);
+      const response = await axios.get(`${props.serverURI}/user/${value}`);
 
-        if (response.data.response === true) {
-          setErrorUsername(response.data.message);
-        } else {
-          setErrorUsername(response.data.message);
-          setUsername(value);
-        }
-      })();
+      if (response.data.response === true) {
+        setErrorUsername(response.data.message);
+      } else {
+        setErrorUsername(response.data.message);
+        setUsername(value);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -65,19 +66,16 @@ const Modal = (props) => {
       return setErrorPassword("Votre mot de passe ne peut etre vide.");
     }
     if (!regexLetters.test(value)) {
-      console.log(regexLetters.test(value));
       return setErrorPassword(
         "Votre mot de passe doit contenir au moins une lettre."
       );
     }
     if (!regexNumber.test(value)) {
-      console.log(regexNumber.test(value));
       return setErrorPassword(
         "Votre mot de passe doit contenir au moins un chiffre."
       );
     }
     if (!regexGlobal.test(value)) {
-      console.log(regexGlobal.test(value));
       return setErrorPassword(
         "Votre mot de passe doit contenir minimum sept caratères."
       );
@@ -104,7 +102,7 @@ const Modal = (props) => {
     }
   };
 
-  const handleOnSubmit = (event) => {
+  const handleOnSubmit = async (event) => {
     event.preventDefault();
     if (
       username &&
@@ -118,26 +116,29 @@ const Modal = (props) => {
       errorConfirmPassword === ""
     ) {
       try {
-        (async () => {
-          const response = await axios.post(`${props.serverURI}/user/signup`, {
-            newsletter: newsLetter,
-            name: username,
-            mail: mail,
-            password: password,
-          });
-          console.log(response);
-          document.cookie = ` token = ${response.data.token}; path=/;max-age=3600;secure;samesite=strict;httpOnly:true`;
-          setUsername("");
-          setMail("");
-          setPassword("");
-          setConfirmPassword("");
-          props.setDisplayModal(!props.displayModal);
-          navigate("/");
-        })();
+        const response = await axios.post(`${props.serverURI}/user/signup`, {
+          newsletter: newsLetter,
+          name: username,
+          mail: mail,
+          password: password,
+        });
+        Cookies.set("token", response.data.token, { secure: true });
+        Cookies.set("username", response.data.account.username, {
+          secure: true,
+        });
+
+        props.setIsConnected(!props.isConnected);
+        props.setSignup(!props.signup);
+        // document.cookie = ` token = ${response.data.token}; path=/;max-age=3600;secure;samesite=strict;httpOnly:true`;
+        // document.cookie = `username=${response.data.account.username};path=/;max_age=3600;secure;samesite=strict`;
+        props.setDisplayMessageLogin(!props.displayMessagelogin);
+        setTimeout(() => {
+          props.setDisplayMessageLogin(props.displayMessagelogin);
+        }, 3000);
+        props.setDisplayModal(!props.displayModal);
+        navigate("/");
       } catch (error) {
-        console.log("ok");
-        console.log(error);
-        setErrorConditions(error.data.message);
+        setErrorConditions(error.response.data.message);
       }
     } else {
       checkConditions(conditions);
@@ -149,11 +150,22 @@ const Modal = (props) => {
   };
 
   return (
-    <section className="modal">
-      <div>
+    <section
+      className="modal"
+      onClick={() => {
+        props.setDisplayModal(!props.displayModal);
+        props.setSignup(!props.signup);
+      }}
+    >
+      <div
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+      >
         <button
           onClick={() => {
             props.setDisplayModal(!props.displayModal);
+            props.setSignup(!props.signup);
           }}
         >
           <FontAwesomeIcon icon={faXmark} />
@@ -304,11 +316,19 @@ const Modal = (props) => {
               au moin 18 ans.
             </p>
           </div>
-          <p className={`info ${errorConditions && "error"}`}>
-            {errorConditions && errorConditions}
-          </p>
+          {errorConditions && <p className="info error">{errorConditions}</p>}
           <input type="submit" value="Valider" />
         </form>
+        <p>
+          Déja inscrit ? &nbsp;
+          <span
+            onClick={() => {
+              props.setSignup(!props.signup);
+            }}
+          >
+            Click ici.
+          </span>
+        </p>
       </div>
     </section>
   );

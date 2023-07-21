@@ -8,7 +8,6 @@
   min-height: 100%;
   z-index: 2;
   width: 100vw;
-  border-radius: 5px;
 }
 .modal > div > p {
   font-size: 24px;
@@ -22,6 +21,7 @@
   height: 500px;
   overflow-y: scroll;
   padding: 20px;
+  border-radius: 5px;
 }
 .modal > div > form {
   display: flex;
@@ -53,6 +53,7 @@
   width: 100%;
   border-bottom: 1px solid #757575;
   font-size: 16px;
+  padding-left: 5px;
 }
 
 .eye {
@@ -84,12 +85,25 @@ form .info {
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 input[type="checkbox"] {
   transform: scale(1.5);
 }
-input[type="checkbox"]:checked {
-  background-color: #007580;
-  color: white;
+
+.modal form + p {
+  margin-top: 30px;
+  font-size: 18px;
+}
+
+form + p > span {
+  color: #007580;
+  cursor: pointer;
+}
+
+.modal .errorMessage {
+  margin-top: 20px;
+  color: red;
+  font-size: 16px;
 }

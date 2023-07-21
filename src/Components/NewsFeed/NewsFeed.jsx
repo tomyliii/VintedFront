@@ -12,9 +12,6 @@ const NewsFeed = (props) => {
   useEffect(() => {
     try {
       (async () => {
-        // const response = await axios.get(
-        //   "  http://127.0.0.1:3000/offers/offers/?page=" + selectedPage
-        // );
         const response = await axios.get(
           `${props.serverURI}/offers/offers/?page=${selectedPage}`
         );
@@ -33,18 +30,13 @@ const NewsFeed = (props) => {
     }
   }, []);
 
-  const handleOnClick = (value) => {
+  const handleOnClick = async (value) => {
     try {
-      (async () => {
-        // const response = await axios.get(
-        //   "http://127.0.0.1:3000/offers/offers/?page=" + value
-        // );
-        const response = await axios.get(
-          `${props.serverURI}/offers/offers/?page=${value}`
-        );
-        setData(response.data.data);
-        setSelectedPage(value);
-      })();
+      const response = await axios.get(
+        `${props.serverURI}/offers/offers/?page=${value}`
+      );
+      setData(response.data.data);
+      setSelectedPage(value);
     } catch (error) {
       console.log(error.message);
     }

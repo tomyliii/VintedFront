@@ -10,9 +10,6 @@ const PopularItems = (props) => {
   useEffect(() => {
     try {
       (async () => {
-        // const response = await axios.get(
-        //   " http://127.0.0.1:3000/offerspopular"
-        // );
         const response = await axios.get(`${props.serverURI}/offerspopular`);
         setData(response.data.data);
       })();
