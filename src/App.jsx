@@ -10,8 +10,8 @@ import SearchPage from "./Pages/SearchPage";
 import PageNotFound from "./Pages/PageNotFound";
 import Cookies from "js-cookie";
 
-const serverURI = "http://127.0.0.1:3000";
-// const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
+// const serverURI = "http://127.0.0.1:3000";
+const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
 function App() {
   const [userToken, setUserToken] = useState(Cookies.get("token") || "");
 
