@@ -57,7 +57,7 @@ const PopularItems = (props) => {
                 <img src={firstimage} alt="image du produit" />
               </div>
               <div>
-                <p>{item.product_name}</p>
+                <p className="producte-name">{item.product_name}</p>
                 <p className="info">{item.product_price} €</p>
                 <p className="info">{item.product_details[0].size}</p>
                 <p className="info">{item.owner.username}</p>

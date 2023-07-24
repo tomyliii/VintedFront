@@ -8,7 +8,7 @@ const HomePage = (props) => {
   return (
     <main>
       <section className="hero">
-        <div>
+        <div className="hero-bloc">
           <img
             className="dechirer"
             src={Dechirer}

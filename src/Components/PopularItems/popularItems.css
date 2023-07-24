@@ -14,11 +14,6 @@
   width: 100%;
 }
 
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
 .popular .item-card {
   display: flex;
   flex-direction: column;
@@ -48,4 +43,26 @@
 
 .popular a[class*="card"] {
   width: calc((100% - 75px) / 6);
+}
+
+@media (max-width: 1170px) {
+  .popular a[class*="card"] {
+    width: calc((100% - 75px) / 5.5);
+    flex-shrink: 0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+@media (max-width: 960px) {
+  .popular a[class*="card"] {
+    width: calc((100% - 60px) / 4.5);
+  }
+}
+@media (max-width: 720px) {
+  .popular a[class*="card"] {
+    width: calc((100% - 30px) / 2.5);
+  }
 }

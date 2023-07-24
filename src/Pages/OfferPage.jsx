@@ -60,8 +60,17 @@ const OfferPage = (props) => {
   ) : (
     <main className="offer-page">
       <div className="wrapper">
+        <section className="item-pictures small-screen-offer">
+          {images.map((image) => {
+            return (
+              <div key={"item-picture" + image}>
+                <img src={image} alt="image de l'article" />
+              </div>
+            );
+          })}
+        </section>
         <div>
-          <section className="item-pictures">
+          <section className="item-pictures large-screen-offer">
             {images.map((image) => {
               return (
                 <div key={"item-picture" + image}>
@@ -102,7 +111,7 @@ const OfferPage = (props) => {
                     <img src={firstimage} alt="image du produit" />
                   </div>
                   <div>
-                    <p>{item.product_name}</p>
+                    <p className="producte-name">{item.product_name}</p>
                     <p className="info">{item.product_price} €</p>
                     <p className="info">{item.product_details[0].size}</p>
                   </div>
