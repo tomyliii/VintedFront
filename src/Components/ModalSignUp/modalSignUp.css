@@ -23,6 +23,9 @@
   padding: 20px;
   border-radius: 5px;
 }
+.modal .signup {
+  height: 90vh;
+}
 .modal > div > form {
   display: flex;
   flex-direction: column;
@@ -48,14 +51,18 @@
 .modal input[type="text"],
 .modal input[type="password"],
 .modal input[type="email"] {
-  padding: 10px 0;
+  padding: 10px 5px;
   border: none;
   width: 100%;
   border-bottom: 1px solid #757575;
   font-size: 16px;
-  padding-left: 5px;
 }
 
+.modal input:focus {
+  outline: none;
+  background-color: #f0f0f0;
+  border-radius: 5px 5px 0 0;
+}
 .eye {
   position: absolute;
   right: 5px;
@@ -106,4 +113,10 @@ form + p > span {
   margin-top: 20px;
   color: red;
   font-size: 16px;
+}
+
+@media (max-width: 500px) {
+  .modal > div {
+    width: 90%;
+  }
 }

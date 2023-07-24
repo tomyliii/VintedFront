@@ -5,53 +5,83 @@ import ModalSignUp from "../ModalSignUp/ModalSignUp";
 import ModalLogin from "../ModalLogin/ModalLogin";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-// import { getCookie } from "../../assets/cookiesFunctions/cookiesFunction";
-
+import { useNavigate } from "react-router-dom";
+import Toggle from "../Toggle/Toggle";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 const Header = (props) => {
+  const navigate = useNavigate();
   const [displayModal, setDisplayModal] = useState(false);
   const [signup, setSignup] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [displaMessagelogin, setDisplayMessageLogin] = useState(false);
-  // console.log(getCookie("username"));
-  // if (getCookie("username") !== "") {
-  //   setIsCOnnected(!isConnected);
-  // }
+  const [searchArticle, setSearchArticle] = useState("");
+  const [isChecked, setIsCheked] = useState(false);
+  const [smallScreenModal, setSmallScreenModal] = useState(false);
   useEffect(() => {
-    displayModal === true
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "unset");
-  }, [displayModal]);
-  // if (Cookies.get("token")) {
-  //   setIsCOnnected(!isConnected);
-  // }
+    if (displayModal || smallScreenModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [displayModal, smallScreenModal]);
 
-  // useEffect(() => {
-  //   setDisplayMessageLogin(!displaMessagelogin);
-  //   setTimeout(() => {
-  //     setDisplayMessageLogin(displaMessagelogin);
-  //   }, 3000);
-  // }, [isConnected]);
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
+    if (searchArticle && !isChecked) {
+      navigate(`/SearchPage/${searchArticle}/price-asc`);
+    }
+    if (searchArticle && isChecked) {
+      navigate(`/SearchPage/${searchArticle}/price-desc`);
+    }
+  };
+
   return (
     <>
       <header>
         <section>
           <div className="wrapper">
-            <div>
+            <div className="logo-block">
               <Link to={"/"}>
                 <img src={Logo} alt="Logo vinted" />
               </Link>
+              <button
+                className="small-sceen-menu"
+                onClick={() => {
+                  setSmallScreenModal(!smallScreenModal);
+                  console.log(smallScreenModal);
+                }}
+              >
+                {smallScreenModal ? (
+                  <FontAwesomeIcon icon={faXmark} />
+                ) : (
+                  <FontAwesomeIcon icon={faBars} />
+                )}
+              </button>
             </div>
             <div>
-              <form>
+              <form
+                onSubmit={(event) => {
+                  handleOnSubmit(event);
+                }}
+              >
                 <input
                   type="search"
-                  name=""
-                  id=""
+                  name="search"
+                  id="search"
+                  value={searchArticle}
                   placeholder="Rechercher des articles"
+                  onChange={(event) => setSearchArticle(event.target.value)}
                 />
+                <div>
+                  <div className="toggle-section">
+                    <p>Trier par prix: </p>
+                    <Toggle isChecked={isChecked} setIsCheked={setIsCheked} />
+                  </div>
+                  <div className="range-section"></div>
+                </div>
               </form>
               <div className="header-btn">
-                {}
                 {isConnected ? (
                   <button
                     className="disconnect-btn"
@@ -96,6 +126,40 @@ const Header = (props) => {
           </ul>
         </nav>
       </header>
+      {smallScreenModal && (
+        <div className="small-screen-modal">
+          <div className="header-btn">
+            {isConnected ? (
+              <button
+                className="disconnect-btn"
+                onClick={() => {
+                  setSignup(false);
+                  Cookies.remove("token", { secure: true });
+                  Cookies.remove("username", { secure: true });
+                  setIsConnected(!isConnected);
+                  setDisplayMessageLogin(!displaMessagelogin);
+                  setTimeout(() => {
+                    setDisplayMessageLogin(displaMessagelogin);
+                  }, 3000);
+                }}
+              >
+                Se déconnecter
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setDisplayModal(!displayModal);
+                }}
+              >
+                S'inscrire | Se connecter
+              </button>
+            )}
+            <button>Vends tes articles</button>
+            <button>?</button>
+          </div>
+        </div>
+      )}
+
       {displayModal ? (
         signup ? (
           <ModalSignUp

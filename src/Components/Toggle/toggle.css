@@ -1,0 +1,85 @@
+:root {
+  --color-back-off: #007782;
+  --color-back-on: #007782;
+  --color-toggle-off: rgb(255, 255, 255);
+  --color-toggle-on: rgb(255, 255, 255);
+  --width-back: 50px;
+  --height-back: calc(var(--width-back) / 2);
+  --border-radius-back: calc(var(--height-back) / 2);
+  --width-toggle: calc(var(--height-back) / 1.2);
+  --height--toggle: var(--width-toggle);
+  --position-top-toggle: calc(var(--width-back) * 0.05);
+  --position-left-toggle: calc(var(--width-back) * 0.05);
+  --position-left-toggle-on: calc(
+    (var(--width-back) / 2 + (var(--height-back) * 0.05))
+  );
+}
+
+.toggle-label {
+  margin: 5px;
+  border-radius: var(--border-radius-back);
+  position: relative;
+  display: inline-block;
+  width: var(--width-back);
+  height: var(--height-back);
+  background-color: var(--color-back-off);
+  text-align: center;
+  transition: 0.3s ease-out;
+}
+
+.toggle-label span {
+  color: var(--color-back-off);
+  padding-top: 3px;
+  position: absolute;
+  top: var(--position-top-toggle);
+  left: 2px;
+  display: inline-block;
+  content: "";
+  border-radius: 50%;
+  width: var(--width-toggle);
+  height: var(--width-toggle);
+  background-color: var(--color-toggle-off);
+  transition: 0.3s ease-out;
+  box-shadow: 0px 0px 10px rgb(0, 0, 0);
+  font-size: 15px;
+}
+/* .toggle-label:after {
+  position: absolute;
+  top: var(--position-top-toggle);
+  left: 5px;
+  display: inline-block;
+  content: "";
+  border-radius: 50%;
+  width: var(--width-toggle);
+  height: var(--width-toggle);
+  background-color: var(--color-toggle-off);
+  transition: 0.3s;
+   box-shadow: 0px 0px 10px rgb(0, 0, 0);
+} */
+
+#chekbox-toggle:checked + .toggle-label span {
+  left: var(--position-left-toggle-on);
+  background-color: var(--color-toggle-on);
+  color: var(--color-back-on);
+}
+/* #chekbox-toggle:checked + .toggle-label:after {
+  left: var(--position-left-toggle-on);
+  background-color: var(--color-toggle-on);
+} */
+
+#chekbox-toggle:checked + .toggle-label {
+  background-color: var(--color-back-on);
+}
+
+#chekbox-toggle {
+  opacity: 0;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --width-back: 30px;
+  }
+  .toggle-label span {
+    font-size: 7px;
+  }
+}

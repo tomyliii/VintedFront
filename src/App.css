@@ -174,6 +174,7 @@ a {
 .owner-offers > div > img {
   object-fit: cover;
   width: 25px;
+  height: 25px;
   border-radius: 50%;
 }
 
@@ -323,6 +324,7 @@ a {
   object-fit: cover;
   width: 25px;
   border-radius: 50%;
+  height: 25px;
 }
 @media (max-width: 1170px) {
   .wrapper {
@@ -330,4 +332,8 @@ a {
     /* width: 100vw; */
     margin: 0 20px;
   }
+}
+@media (max-width: 960px) {
+}
+@media (max-width: 720px) {
 }

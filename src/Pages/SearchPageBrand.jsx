@@ -4,39 +4,28 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import Toggle from "../Components/Toggle/Toggle";
 const SearchPage = (props) => {
-  const [searchResulte, setSearchResulte] = useState({});
-  const { search, sort } = useParams();
-  const [isReady, setIseready] = useState(false);
-
-  console.log(search, props);
-
+  const { brand } = useParams();
+  const [data, setData] = useState([]);
   useEffect(() => {
     try {
-      console.log("OKKKK");
       (async () => {
         const response = await axios.get(
-          `${props.serverURI}/offers?title=${search}&priceMin=&priceMax=&sort=${sort}&limit=`
+          `${props.serverURI}/offers?brand=${brand}`
         );
-        console.log(response.data.offers);
-        setSearchResulte([...response.data.offers]);
-        setIseready(true);
+
+        setData(response.data.offers);
       })();
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
-  }, [search, sort]);
+  }, []);
 
-  return isReady === false ? (
-    <div className="loading">
-      <p>Loading, please wait...Searching</p>
-    </div>
-  ) : (
+  return (
     <section className="news-feed-section wrapper">
-      <h3>Fil d'actu</h3>
+      <h3>Recherche par marque</h3>
       <div>
-        {searchResulte.map((item) => {
+        {data.map((item) => {
           const getImages = (item) => {
             const arrayOfImages = [];
 

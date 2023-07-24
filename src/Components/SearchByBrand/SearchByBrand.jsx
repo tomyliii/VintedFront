@@ -38,7 +38,7 @@ const SearchByBrand = (props) => {
       <div>
         {brands.map((item) => {
           return (
-            <Link key={"Brand" + item} to={`/SearchPage/${item}`}>
+            <Link key={"Brand" + item} to={`/SearchPageBrand/${item}`}>
               {item}
             </Link>
           );

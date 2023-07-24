@@ -51,7 +51,7 @@ const OfferPage = (props) => {
     } catch (error) {
       console.log(error.message);
     }
-  }, []);
+  }, [id]);
 
   return isReady === false ? (
     <div className="loading">
@@ -79,7 +79,7 @@ const OfferPage = (props) => {
               const firstimage = images[0];
               return (
                 <Link
-                  to={`/product2/${item._id}`}
+                  to={`/product/${item._id}`}
                   key={"owneroffers" + item._id}
                   className="item-card"
                 >
@@ -105,7 +105,6 @@ const OfferPage = (props) => {
                     <p>{item.product_name}</p>
                     <p className="info">{item.product_price} €</p>
                     <p className="info">{item.product_details[0].size}</p>
-                    {/* <p className="info">{item.owner.username}</p> */}
                   </div>
                 </Link>
               );

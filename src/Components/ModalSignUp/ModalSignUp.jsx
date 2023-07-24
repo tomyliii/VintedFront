@@ -126,11 +126,8 @@ const Modal = (props) => {
         Cookies.set("username", response.data.account.username, {
           secure: true,
         });
-
         props.setIsConnected(!props.isConnected);
         props.setSignup(!props.signup);
-        // document.cookie = ` token = ${response.data.token}; path=/;max-age=3600;secure;samesite=strict;httpOnly:true`;
-        // document.cookie = `username=${response.data.account.username};path=/;max_age=3600;secure;samesite=strict`;
         props.setDisplayMessageLogin(!props.displayMessagelogin);
         setTimeout(() => {
           props.setDisplayMessageLogin(props.displayMessagelogin);
@@ -158,6 +155,7 @@ const Modal = (props) => {
       }}
     >
       <div
+        className="signup"
         onClick={(event) => {
           event.stopPropagation();
         }}
