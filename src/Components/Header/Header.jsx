@@ -19,6 +19,9 @@ const Header = (props) => {
   const [isChecked, setIsCheked] = useState(false);
   const [smallScreenModal, setSmallScreenModal] = useState(false);
   useEffect(() => {
+    if (Cookies.get("token")) {
+      setIsConnected(true);
+    }
     if (displayModal || smallScreenModal) {
       document.body.style.overflow = "hidden";
     } else {
@@ -36,6 +39,7 @@ const Header = (props) => {
     }
   };
 
+  console.log(Cookies.get("token"));
   return (
     <>
       <header>
@@ -136,6 +140,7 @@ const Header = (props) => {
                   setSignup(false);
                   Cookies.remove("token", { secure: true });
                   Cookies.remove("username", { secure: true });
+                  setSmallScreenModal(false);
                   setIsConnected(!isConnected);
                   setDisplayMessageLogin(!displaMessagelogin);
                   setTimeout(() => {
@@ -172,6 +177,7 @@ const Header = (props) => {
             setDisplayMessageLogin={setDisplayMessageLogin}
             setIsConnected={setIsConnected}
             isConnected={isConnected}
+            setSmallScreenModal={setSmallScreenModal}
           />
         ) : (
           <ModalLogin
@@ -184,6 +190,7 @@ const Header = (props) => {
             setSignup={setSignup}
             displayMessagelogin={displaMessagelogin}
             setDisplayMessageLogin={setDisplayMessageLogin}
+            setSmallScreenModal={setSmallScreenModal}
           />
         )
       ) : (

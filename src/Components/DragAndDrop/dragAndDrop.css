@@ -1,0 +1,64 @@
+.dropzone-section > .dropzone {
+  flex-direction: column;
+  text-align: center;
+  border-bottom: 1px blue dotted;
+  border: 1px #007782 dotted;
+  margin: 30px;
+  height: 200px;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #0077821f;
+  border-radius: 5px;
+}
+.dropzone > button {
+  background-color: white;
+  border: #007782 1px solid;
+  border-radius: 5px;
+  color: #007782;
+  height: 30px;
+  width: 50%;
+}
+.pictures-status {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.pictures-accepted {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.pictures-accepted > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.thumb {
+  width: calc((100% - 40px) / 5);
+  flex-shrink: 0;
+}
+.thumb > div {
+  width: 100%;
+}
+
+.thumb img {
+  width: 100%;
+  aspect-ratio: 1.5;
+  object-fit: cover;
+}
+
+.pictures-rejected {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.drag-Reject {
+  color: red;
+}
+
+.drag-Accept {
+  color: green;
+}

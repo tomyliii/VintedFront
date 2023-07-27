@@ -336,6 +336,75 @@ a {
 .offer-page .small-screen-offer {
   display: none;
 }
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.filter {
+  padding: 10px 15px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  border: #757575 1px solid;
+  font-family: maison-noeue, sans-serif;
+  cursor: pointer;
+}
+
+.filters > div {
+  position: relative;
+}
+
+.input-filter {
+  position: absolute;
+  background-color: white;
+  padding: 20px 10px 20px 10px;
+  box-shadow: 0px 0px 30px lightgray;
+  border-radius: 5px;
+  bottom: -90px;
+  z-index: 1;
+}
+.input-filter input {
+  border: none;
+  padding: 10px 10px;
+  background-color: lightgray;
+  border-radius: 5px;
+}
+.sort form,
+.price form {
+  display: flex;
+  gap: 20px;
+}
+
+.sort {
+  width: 250px;
+  bottom: -70px;
+}
+
+/*----------------------PublishPage---------------------------------------------------------*/
+.publish {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+}
+.publish > form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.publish > form > div {
+  border: 1px solid black;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.publish > form > div > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid black;
+}
 
 @media (max-width: 1170px) {
   .wrapper {
@@ -346,6 +415,17 @@ a {
 
   .offer-page .owner-offers > .item-card {
     width: calc((100% - 45px) / 4);
+  }
+  .sort form,
+  .price form {
+    flex-direction: column;
+  }
+  .price {
+    bottom: -140px;
+  }
+  .sort {
+    width: 130px;
+    bottom: -110px;
   }
 }
 @media (max-width: 960px) {
@@ -420,7 +500,7 @@ a {
   }
 
   .owner-offers .item-card .owner > div > .icon-standar {
-    font-size: 10px;
+    font-size: 6px;
   }
 
   .owner > div > img {

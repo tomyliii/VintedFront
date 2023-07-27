@@ -20,18 +20,19 @@ const ModalLogin = (props) => {
           mail: mail,
           password: password,
         });
-        Cookies.set("token", response.data.token, { secure: true });
-        Cookies.set("username", response.data.account.username, {
+        Cookies.set("token", response.data.token, 1, { secure: true });
+        Cookies.set("username", response.data.account.username, 1, {
           secure: true,
         });
+
+        props.setDisplayModal(!props.displayModal);
         props.setIsConnected(!props.isConnected);
-        // document.cookie = `token=${response.data.token};path=/;max-age=3600;secure;httpOnly=true;samesite=strict`;
-        // document.cookie = `username=${response.data.account.username};path=/;max_age=3600;secure;samesite=strict`;
+        props.setSmallScreenModal(false);
         props.setDisplayMessageLogin(!props.displayMessagelogin);
         setTimeout(() => {
           props.setDisplayMessageLogin(props.displayMessagelogin);
         }, 3000);
-        props.setDisplayModal(!props.displayModal);
+
         navigate("/");
       }
     } catch (error) {
