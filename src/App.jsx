@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Router>
-        <Header serverURI={serverURI} />
+        <Header serverURI={serverURI} setUserToken={setUserToken} />
         <Routes>
           <Route path="/" element={<HomePage serverURI={serverURI} />}></Route>
           <Route

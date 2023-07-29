@@ -34,7 +34,7 @@ const SearchByBrand = (props) => {
     </div>
   ) : (
     <section className="brands-section wrapper">
-      <h3>Rechercher par marque</h3>
+      <h3>Rechercher par marque </h3>
       <div>
         {brands.map((item) => {
           return (

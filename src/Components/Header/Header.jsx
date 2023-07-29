@@ -38,7 +38,9 @@ const Header = (props) => {
       navigate(`/SearchPage/${searchArticle}/price-desc`);
     }
   };
-
+  const handleOnClickSmallScreenModal = () => {
+    setSmallScreenModal(false);
+  };
   console.log(Cookies.get("token"));
   return (
     <>
@@ -53,7 +55,6 @@ const Header = (props) => {
                 className="small-sceen-menu"
                 onClick={() => {
                   setSmallScreenModal(!smallScreenModal);
-                  console.log(smallScreenModal);
                 }}
               >
                 {smallScreenModal ? (
@@ -93,6 +94,7 @@ const Header = (props) => {
                       setSignup(false);
                       Cookies.remove("token", { secure: true });
                       Cookies.remove("username", { secure: true });
+                      // props.setUserToken("");
                       setIsConnected(!isConnected);
                       setDisplayMessageLogin(!displaMessagelogin);
                       setTimeout(() => {
@@ -111,7 +113,9 @@ const Header = (props) => {
                     S'inscrire | Se connecter
                   </button>
                 )}
-                <button>Vends tes articles</button>
+
+                <Link to={"/Publish"}>Vends tes articles</Link>
+
                 <button>?</button>
               </div>
             </div>
@@ -159,7 +163,14 @@ const Header = (props) => {
                 S'inscrire | Se connecter
               </button>
             )}
-            <button>Vends tes articles</button>
+            <Link
+              to={"/publish"}
+              onClick={() => {
+                handleOnClickSmallScreenModal();
+              }}
+            >
+              Vends tes articles
+            </Link>
             <button>?</button>
           </div>
         </div>

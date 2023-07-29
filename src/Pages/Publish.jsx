@@ -1,11 +1,18 @@
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import { useDropzone } from "react-dropzone";
-import { useState } from "react";
+import history from "../History/History";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import DragAndDrop from "../Components/DragAndDrop/DragAndDrop";
 
 export default function Publish({ userToken, serverURI }) {
+  const location = useLocation();
+  console.log("location", location);
+  history.push(location.pathname);
+  console.log("history", history);
+  const navigate = useNavigate();
+
   const [files, setFiles] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -17,6 +24,7 @@ export default function Publish({ userToken, serverURI }) {
   const [price, setPrice] = useState("");
   const [change, setChange] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const maxFilesauthorized = 10;
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
@@ -66,23 +74,24 @@ export default function Publish({ userToken, serverURI }) {
               },
             }
           );
-          alert(JSON.stringify(data));
+
+          navigate(`/product/${data.data._id}`);
+          // alert(JSON.stringify(data));
         } catch (error) {
-          if (error.response.status === 500) {
-            console.error("an error occured");
+          if (error.status === 500) {
+            setErrorMessage("Une erreur est survenue?");
           } else {
-            console.error(error.response.data);
+            setErrorMessage(error.response.data.message);
           }
         }
       } else {
         setErrorMessage("Format d'image non pris en charge.");
-        console.log(errorMessage);
       }
     } else {
       setErrorMessage("Veuillez remplire tous les Champs.");
-      console.log(errorMessage);
     }
   };
+
   return userToken ? (
     <main className="publish">
       <form
@@ -91,9 +100,12 @@ export default function Publish({ userToken, serverURI }) {
           handleOnSubmit(event);
         }}
       >
-        <p>Vends ton article</p>
+        <h3>Vends ton article</h3>
 
-        <DragAndDrop setFiles={setFiles} />
+        <DragAndDrop
+          setFiles={setFiles}
+          maxFilesauthorized={maxFilesauthorized}
+        />
         {/* <div>
           <input
             type="file"
@@ -106,7 +118,7 @@ export default function Publish({ userToken, serverURI }) {
           />
           <label htmlFor="file"></label>
         </div> */}
-        <div>
+        <div className="publish-principals-infos">
           <div>
             <label htmlFor="title">Titre</label>
             <input
@@ -117,22 +129,23 @@ export default function Publish({ userToken, serverURI }) {
               onChange={(event) => {
                 setTitle(event.target.value);
               }}
+              placeholder="ex:Chemise Sezane verte"
             />
           </div>
           <div>
             <label htmlFor="description">Décris ton article</label>
-            <input
-              type="text"
+            <textarea
               name="description"
               id="description"
               value={description}
               onChange={(event) => {
                 setDescription(event.target.value);
               }}
-            />
+              placeholder="ex:Portée quelque fois, taille correctement."
+            ></textarea>
           </div>
         </div>
-        <div>
+        <div className="publish-details">
           <div>
             <label htmlFor="brand">Marque</label>
             <input
@@ -143,6 +156,7 @@ export default function Publish({ userToken, serverURI }) {
               onChange={(event) => {
                 setBrand(event.target.value);
               }}
+              placeholder="ex:Zara"
             />
           </div>
           <div>
@@ -155,6 +169,7 @@ export default function Publish({ userToken, serverURI }) {
               onChange={(event) => {
                 setSize(event.target.value);
               }}
+              placeholder="ex:L/40/12"
             />
           </div>
           <div>
@@ -167,6 +182,7 @@ export default function Publish({ userToken, serverURI }) {
               onChange={(event) => {
                 setColor(event.target.value);
               }}
+              placeholder="ex:Fushia"
             />
           </div>
           <div>
@@ -179,6 +195,7 @@ export default function Publish({ userToken, serverURI }) {
               onChange={(event) => {
                 setCondition(event.target.value);
               }}
+              placeholder="ex:Neuf avec étiquette"
             />
           </div>
           <div>
@@ -191,33 +208,42 @@ export default function Publish({ userToken, serverURI }) {
               onChange={(event) => {
                 setPlace(event.target.value);
               }}
+              placeholder="ex:Paris"
             />
           </div>
         </div>
         <div>
-          <div>
-            <label htmlFor="price">Prix</label>
-            <input
-              type="number"
-              name="price"
-              id="price"
-              value={price}
-              onChange={(event) => {
-                setPrice(event.target.value);
-              }}
-            />
+          <div className="price-publish-Section">
             <div>
+              <label htmlFor="price">Prix</label>
               <input
-                type="checkbox"
-                id="change"
-                checked={change}
-                onChange={() => {
-                  setChange(!change);
+                type="number"
+                name="price"
+                id="price"
+                value={price}
+                onChange={(event) => {
+                  setPrice(event.target.value);
                 }}
+                placeholder="0,00 €"
               />
-              <label htmlFor="change">
-                Je suis intéréssé(e) par les échanges.
-              </label>
+            </div>
+            <div>
+              <div className="error-Message">
+                {errorMessage && errorMessage}
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="change"
+                  checked={change}
+                  onChange={() => {
+                    setChange(!change);
+                  }}
+                />
+                <label htmlFor="change">
+                  Je suis intéréssé(e) par les échanges.
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -225,6 +251,7 @@ export default function Publish({ userToken, serverURI }) {
       </form>
     </main>
   ) : (
-    Navigate("/")
+    <div>Ca marche pas {userToken} </div>
+    // <Navigate to="/" />
   );
 }

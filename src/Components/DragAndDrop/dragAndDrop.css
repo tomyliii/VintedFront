@@ -1,8 +1,8 @@
 .dropzone-section > .dropzone {
   flex-direction: column;
   text-align: center;
-  border-bottom: 1px blue dotted;
-  border: 1px #007782 dotted;
+  border-bottom: 1px #007782 dashed !important;
+  border: 1px #007782 dashed;
   margin: 30px;
   height: 200px;
   justify-content: space-around;
@@ -11,12 +11,16 @@
   border-radius: 5px;
 }
 .dropzone > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   border: #007782 1px solid;
   border-radius: 5px;
   color: #007782;
   height: 30px;
-  width: 50%;
+  width: 40%;
+  padding: 20px;
 }
 .pictures-status {
   width: 100%;
@@ -33,6 +37,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 20px;
 }
 .thumb {
   width: calc((100% - 40px) / 5);
@@ -41,11 +46,31 @@
 .thumb > div {
   width: 100%;
 }
-
+.thumb > div > div {
+  position: relative;
+}
+.thumb > div button {
+  font-size: 16px;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.778);
+  border: none;
+  right: 5px;
+  top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.thumb > div button:hover {
+  background-color: white;
+}
 .thumb img {
   width: 100%;
   aspect-ratio: 1.5;
   object-fit: cover;
+}
+.pictures-status > p {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .pictures-rejected {
@@ -54,7 +79,16 @@
   flex-direction: column;
   gap: 20px;
 }
-
+.pictures-rejected > ul {
+  font-family: maison-noeue, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style-type: circle;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  font-size: 14px;
+}
 .drag-Reject {
   color: red;
 }

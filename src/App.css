@@ -38,12 +38,17 @@ main {
   top: 15%;
 }
 
-.bloc-top > button {
+.bloc-top > a:first-of-type {
   height: 40px;
   background-color: #007580;
   color: white;
   border-radius: 5px;
   border: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
 .bloc-top > a {
@@ -61,7 +66,16 @@ h3 {
   font-size: 24px;
   font-weight: bold;
 }
+h4 {
+  font-family: maison-neue-bold, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
 
+label {
+  font-family: maison-neue-bold, sans-serif;
+  font-size: 16px;
+}
 p {
   font-family: maison-neue, sans-serif;
   font-size: 14px;
@@ -173,7 +187,7 @@ a {
   text-align: center;
 }
 
-.owner-offers .owner > img {
+.owner-offers .owner img {
   object-fit: cover;
   width: 25px;
   height: 25px;
@@ -186,6 +200,7 @@ a {
   gap: 10px;
   padding: 0 10px 10px 10px;
 }
+
 .producte-name {
   font-size: 18px;
   font-weight: bold;
@@ -385,6 +400,9 @@ a {
   background-color: #f2f2f2;
   min-height: 100vh;
 }
+.publish > form > h3 {
+  margin-top: 60px;
+}
 .publish > form {
   display: flex;
   flex-direction: column;
@@ -403,7 +421,64 @@ a {
   display: flex;
   justify-content: space-between;
   padding: 20px;
+}
+.publish > form > div > div:not(:last-of-type) {
   border-bottom: 1px solid black;
+}
+.publish .publish-principals-infos input,
+.publish textarea,
+.publish .publish-details input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid lightgray;
+}
+.publish textarea {
+  resize: none;
+  height: 300px;
+}
+.publish label {
+  width: 100%;
+  flex: 1;
+}
+.price-publish-Section {
+  flex-direction: column;
+  gap: 20px;
+}
+.price-publish-Section > div:first-of-type {
+  display: flex;
+}
+.price-publish-Section > div:first-of-type > input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid lightgray;
+}
+.price-publish-Section > div:last-child {
+  display: flex;
+}
+.price-publish-Section > div:last-child > div:first-of-type {
+  flex: 1;
+}
+.price-publish-Section > div:last-child > div:last-child {
+  flex: 1;
+}
+.publish input[type="submit"] {
+  align-self: flex-end;
+  background-color: #007782;
+  color: white;
+  font-family: mainson-noeue, sans-serif;
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 30px;
+  border: none;
+  border-radius: 5px;
+}
+.error-Message {
+  font-family: maison-noeue, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: red;
 }
 
 @media (max-width: 1170px) {
@@ -546,5 +621,15 @@ a {
   }
   .bloc-top > a {
     color: #80bbc0;
+  }
+  .publish > form > div > div {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .price-publish-Section > div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
   }
 }

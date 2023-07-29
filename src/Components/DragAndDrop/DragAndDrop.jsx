@@ -1,35 +1,60 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./dragAndDrop.css";
 export default function DragAndDrop(props) {
   const [arrayOfImages, setArrayOfImages] = useState([]);
+
   const onDrop = useCallback((acceptedFiles) => {
-    console.log("start", acceptedFiles);
     setArrayOfImages(
       acceptedFiles.map((file) => {
         return Object.assign(file, { preview: URL.createObjectURL(file) });
       })
     );
+
+    props.setFiles([...arrayOfImages]);
   }, []);
+
+  useEffect(() => {
+    props.setFiles([...arrayOfImages]);
+  }, [arrayOfImages]);
+
+  const handleOnClick = (event, value) => {
+    event.stopPropagation();
+    for (let i = 0; i < arrayOfImages.length; i++) {
+      if (arrayOfImages[i].name === value) {
+        const arrayOfImagesCopy = [...arrayOfImages];
+        arrayOfImagesCopy.splice(i, 1);
+      }
+    }
+  };
 
   const thumbs = arrayOfImages.map((picture) => {
     return (
       <div key={picture.name} className="thumb">
         <div>
           <p>{picture.name}</p>
-          <img
-            src={picture.preview}
-            onLoad={() => {
-              URL.revokeObjectURL(picture.preview);
-            }}
-          />
+          <div>
+            <button
+              //   type="button"
+              onClick={(event) => handleOnClick(event, picture.name)}
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+            <img
+              src={picture.preview}
+              onLoad={() => {
+                URL.revokeObjectURL(picture.preview);
+              }}
+            />
+          </div>
         </div>
       </div>
     );
   });
 
-  // const maxFilesAutorized = props.maxFilesAutorized;
-  const maxFilesAutorized = 10;
+  const maxFilesAuthorized = props.maxFilesAuthorized;
 
   const {
     acceptedFiles,
@@ -41,13 +66,13 @@ export default function DragAndDrop(props) {
     isDragReject,
   } = useDropzone({
     onDrop,
-    maxFiles: 10,
+    maxFiles: props.maxFilesAuthorized,
     accept: { "image/*": [] },
   });
 
-  const acceptedItems = acceptedFiles.map((picture) => {
-    return <li key={picture.path}>{picture.path}</li>;
-  });
+  //   const acceptedItems = acceptedFiles.map((picture) => {
+  //     return <li key={picture.path}>{picture.path}</li>;
+  //   });
 
   const rejectedItems = fileRejections.map((picture) => {
     return (
@@ -64,7 +89,7 @@ export default function DragAndDrop(props) {
               return (
                 <li key={error.code}>
                   Vous avez dépassé le nombre maximal autorisé (Maximum
-                  {maxFilesAutorized} photos).
+                  {maxFilesAuthorized} photos).
                 </li>
               );
             } else {
@@ -87,30 +112,35 @@ export default function DragAndDrop(props) {
         ) : (
           <p>Glissez et déposez vos photos ou Cliquez pour les séléctionner.</p>
         )}
-        <button>Cliquez</button>
+        <button type="button">
+          <FontAwesomeIcon icon={faPlus} />
+          &nbsp;Cliquez
+        </button>
       </div>
 
-      {
-        <div className="pictures-status">
-          {/* {!acceptedFiles && !rejectedItems && (
+      <div className="pictures-status">
+        {acceptedFiles.length === 0 && rejectedItems.length === 0 ? (
           <p>
-            Vous pouvez déposer jusqu'à 10 photos de votre article. Veillez a
-            choisir un format adapter(image).
+            Vous pouvez déposer jusqu'à {maxFilesAuthorized} photos de votre
+            article. Veillez a choisir un format adapté (image).
           </p>
-        )} */}
-
+        ) : (
+          ""
+        )}
+        {acceptedFiles.length !== 0 && (
           <div className="pictures-accepted">
-            <h4>Photo(s) acceptée(s)</h4>
+            <h4>Photo(s) acceptée(s):</h4>
             {/* <ul>{acceptedItems}</ul> */}
             <div>{thumbs}</div>
           </div>
-
+        )}
+        {rejectedItems.length !== 0 && (
           <div className="pictures-rejected">
-            <h4>Photo(s) refusée(s)</h4>
+            <h4>Fichier(s) refusé(s):</h4>
             <ul>{rejectedItems}</ul>
           </div>
-        </div>
-      }
+        )}
+      </div>
     </div>
   );
 }

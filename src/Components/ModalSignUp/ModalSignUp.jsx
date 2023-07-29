@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import history from "../../History/History";
+
 const Modal = (props) => {
   const [username, setUsername] = useState("");
   const [mail, setMail] = useState("");
@@ -136,7 +138,11 @@ const Modal = (props) => {
           props.setDisplayMessageLogin(props.displayMessagelogin);
         }, 3000);
 
-        navigate("/");
+        if (history.at(-1) === "/Publish") {
+          navigate("/Publish");
+        } else {
+          navigate("/");
+        }
       } catch (error) {
         setErrorConditions(error.response.data.message);
       }

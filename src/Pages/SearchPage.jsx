@@ -8,8 +8,15 @@ import {
   faChevronUp,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import Toggle from "../Components/Toggle/Toggle";
+import history from "../History/History";
+import { useLocation } from "react-router-dom";
+
 const SearchPage = (props) => {
+  const location = useLocation();
+  console.log("location", location);
+  history.push(location.pathname);
+  console.log("history", history);
+
   const [searchResulte, setSearchResulte] = useState({});
   const { search, sort } = useParams();
 

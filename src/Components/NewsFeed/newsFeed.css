@@ -4,7 +4,9 @@
   flex-direction: column;
   gap: 30px;
 }
-
+.news-feed-section h3 {
+  margin-top: 60px;
+}
 .news-feed-section > div {
   display: flex;
   flex-wrap: wrap;

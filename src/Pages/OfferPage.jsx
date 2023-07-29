@@ -9,14 +9,24 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import history from "../History/History";
+import { useLocation } from "react-router-dom";
 
 const OfferPage = (props) => {
+  const location = useLocation();
+  history.push(location.pathname);
+  console.log("history", history);
+
   const [isReady, setIsReady] = useState(false);
   const { id } = useParams();
   const [item, setItem] = useState({});
   const [images, setImage] = useState([]);
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(0);
+  const [pages, setPage] = useState([]);
+  const [selectedPage, setSelectedPage] = useState(1);
+  const [itemsShow, setItemsShow] = useState([]);
+
   const getImages = (item) => {
     const arrayOfImages = [];
 
@@ -46,12 +56,46 @@ const OfferPage = (props) => {
         setItem(response.data.data);
         const arrayOfImages = getImages(response.data.data);
         setImage(arrayOfImages);
+        const arrayOfPages = [];
+        let numberOfPages = Math.floor(ownerItems.data.data.count / 8);
+        if (ownerItems.data.data.count % 8 !== 0) {
+          numberOfPages++;
+        }
+        for (let i = 0; i < numberOfPages; i++) {
+          arrayOfPages.push(i + 1);
+        }
+        setPage(arrayOfPages);
+        const indexOfFirstArticleToShow = (selectedPage - 1) * 8;
+
+        const ArrayOfitemsToShow = items.splice(indexOfFirstArticleToShow, 8);
+
+        setItemsShow([...ArrayOfitemsToShow]);
+
         setIsReady(true);
       })();
     } catch (error) {
       console.log(error.message);
     }
   }, [id]);
+  const handleOnClick = async (value) => {
+    try {
+      const ownerItems = await axios.get(
+        `${props.serverURI}/offersofowner/${id}`
+      );
+
+      const indexOfFirstArticleToShow = (value - 1) * 8;
+
+      const ArrayOfitemsToShow = ownerItems.data.data.offers.splice(
+        indexOfFirstArticleToShow,
+        8
+      );
+
+      setItemsShow([...ArrayOfitemsToShow]);
+      setSelectedPage(value);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return isReady === false ? (
     <div className="loading">
@@ -83,7 +127,7 @@ const OfferPage = (props) => {
             <p>({count}) articles disponibles</p>
           </div>
           <section className="owner-offers">
-            {items.map((item) => {
+            {itemsShow.map((item) => {
               const images = getImages(item);
               const firstimage = images[0];
               return (
@@ -118,6 +162,21 @@ const OfferPage = (props) => {
                 </Link>
               );
             })}
+            <div className="page-selector">
+              {pages.map((page) => {
+                return (
+                  <div
+                    key={page}
+                    className={selectedPage === page ? "selected" : ""}
+                    onClick={() => {
+                      handleOnClick(page);
+                    }}
+                  >
+                    {page}
+                  </div>
+                );
+              })}
+            </div>
           </section>
         </div>
         <aside>

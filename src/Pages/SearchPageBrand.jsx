@@ -4,7 +4,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import history from "../History/History";
+import { useLocation } from "react-router-dom";
+
 const SearchPage = (props) => {
+  const location = useLocation();
+  console.log("location", location);
+  history.push(location.pathname);
+  console.log("history", history);
   const { brand } = useParams();
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -23,7 +30,7 @@ const SearchPage = (props) => {
 
   return (
     <section className="news-feed-section wrapper">
-      <h3>Recherche par marque</h3>
+      <h3>Recherche par marque: {brand}</h3>
       <div>
         {data.map((item) => {
           const getImages = (item) => {
