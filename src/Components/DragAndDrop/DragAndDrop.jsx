@@ -7,6 +7,41 @@ export default function DragAndDrop(props) {
   const [arrayOfImages, setArrayOfImages] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
+    //  if (arrayOfImages.length === 0) {
+    //    setArrayOfImages(
+    //      acceptedFiles.map((file) => {
+    //        return Object.assign(file, { preview: URL.createObjectURL(file) });
+    //      })
+    //    );
+    //    console.log(props.files.length);
+    //    if (props.files.length !== 0) {
+    //      const filesCopy = [...props.files];
+    //      arrayOfImages.forEach((picture) => {
+    //        filesCopy.push(picture);
+    //      });
+    //      props.setFiles([...filesCopy]);
+    //    } else {
+    //      props.setFiles([...arrayOfImages]);
+    //    }
+    //  } else {
+    //    const arrayOfImagesCopy = [...arrayOfImages];
+    //    const newImages = acceptedFiles.map((file) => {
+    //      return Object.assign(file, { preview: URL.createObjectURL(file) });
+    //    });
+    //    newImages.forEach((picture) => {
+    //      arrayOfImagesCopy.push(picture);
+    //    });
+    //    setArrayOfImages([...arrayOfImagesCopy]);
+    //    if (props.files.length !== 0) {
+    //      const filesCopy = [...props.files];
+    //      arrayOfImages.forEach((picture) => {
+    //        filesCopy.push(picture);
+    //      });
+    //      props.setFiles([...filesCopy]);
+    //    } else {
+    //      props.setFiles([...arrayOfImages]);
+    //    }
+    //  }
     setArrayOfImages(
       acceptedFiles.map((file) => {
         return Object.assign(file, { preview: URL.createObjectURL(file) });
@@ -26,6 +61,7 @@ export default function DragAndDrop(props) {
       if (arrayOfImages[i].name === value) {
         const arrayOfImagesCopy = [...arrayOfImages];
         arrayOfImagesCopy.splice(i, 1);
+        setArrayOfImages([...arrayOfImagesCopy]);
       }
     }
   };
@@ -37,7 +73,7 @@ export default function DragAndDrop(props) {
           <p>{picture.name}</p>
           <div>
             <button
-              //   type="button"
+              type="button"
               onClick={(event) => handleOnClick(event, picture.name)}
             >
               <FontAwesomeIcon icon={faXmark} />
@@ -110,7 +146,7 @@ export default function DragAndDrop(props) {
         ) : isDragActive ? (
           <p className="drag-Accept">Déposez vos photos.</p>
         ) : (
-          <p>Glissez et déposez vos photos ou Cliquez pour les séléctionner.</p>
+          <p>Glissez et déposez vos photos ou cliquez pour les séléctionner.</p>
         )}
         <button type="button">
           <FontAwesomeIcon icon={faPlus} />
@@ -127,7 +163,7 @@ export default function DragAndDrop(props) {
         ) : (
           ""
         )}
-        {acceptedFiles.length !== 0 && (
+        {acceptedFiles.length !== 0 && arrayOfImages.length !== 0 && (
           <div className="pictures-accepted">
             <h4>Photo(s) acceptée(s):</h4>
             {/* <ul>{acceptedItems}</ul> */}

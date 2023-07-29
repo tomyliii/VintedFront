@@ -1,0 +1,29 @@
+.signup .dropzone-section > .dropzone {
+  flex-direction: column;
+  text-align: center;
+  border-bottom: 1px #007782 dashed !important;
+  border: 1px #007782 dashed;
+  margin: 30px;
+  height: 200px;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #0077821f;
+  border-radius: 5px;
+}
+.signup .dropzone-section .dropzone {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.signup .thumb {
+  width: 100%;
+}
+.signup .thumb > div > div {
+  width: 50%;
+  margin: 0 auto;
+}
+.signup .thumb img {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  margin-top: 20px;
+}

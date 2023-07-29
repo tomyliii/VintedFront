@@ -462,6 +462,9 @@ a {
 }
 .price-publish-Section > div:last-child > div:last-child {
   flex: 1;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 .publish input[type="submit"] {
   align-self: flex-end;

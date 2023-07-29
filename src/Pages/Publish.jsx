@@ -30,7 +30,7 @@ export default function Publish({ userToken, serverURI }) {
     event.preventDefault();
 
     if (
-      files &&
+      files.length !== 0 &&
       title &&
       description &&
       brand &&
@@ -104,6 +104,7 @@ export default function Publish({ userToken, serverURI }) {
 
         <DragAndDrop
           setFiles={setFiles}
+          files={files}
           maxFilesauthorized={maxFilesauthorized}
         />
         {/* <div>

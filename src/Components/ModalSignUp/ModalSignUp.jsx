@@ -6,6 +6,7 @@ import { faXmark, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import history from "../../History/History";
+import DragAndDropSingUp from "../DragAndDropSingUp/DragAndDropSingUp";
 
 const Modal = (props) => {
   const [username, setUsername] = useState("");
@@ -20,7 +21,7 @@ const Modal = (props) => {
   const [conditions, setConditions] = useState(false);
   const [newsLetter, setNewsLetter] = useState(false);
   const [errorConditions, setErrorConditions] = useState("");
-
+  const [file, setFile] = useState([]);
   const navigate = useNavigate();
 
   const handleOnChange = (set, value) => {
@@ -106,7 +107,9 @@ const Modal = (props) => {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
+    console.log(file.length);
     if (
+      file.length !== 0 &&
       username &&
       mail &&
       password &&
@@ -117,6 +120,19 @@ const Modal = (props) => {
       errorPassword === "" &&
       errorConfirmPassword === ""
     ) {
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("mail", mail);
+      formData.append("password", password);
+      formData.append("newsLetter", newsLetter);
+
+      for (let i = 0; i < file.length; i++) {
+        formData.append("productImg", file[i], formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
       try {
         const response = await axios.post(`${props.serverURI}/user/signup`, {
           newsletter: newsLetter,
@@ -183,6 +199,7 @@ const Modal = (props) => {
             handleOnSubmit(event);
           }}
         >
+          <DragAndDropSingUp setFile={setFile} />
           <div>
             <input
               type="text"

@@ -55,7 +55,7 @@
   background-color: rgba(255, 255, 255, 0.778);
   border: none;
   right: 5px;
-  top: 5px;
+  top: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,6 +67,7 @@
   width: 100%;
   aspect-ratio: 1.5;
   object-fit: cover;
+  margin-top: 10px;
 }
 .pictures-status > p {
   text-align: center;
