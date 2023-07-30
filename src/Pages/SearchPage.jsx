@@ -8,14 +8,11 @@ import {
   faChevronUp,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import history from "../History/History";
 import { useLocation } from "react-router-dom";
 
 const SearchPage = (props) => {
   const location = useLocation();
   console.log("location", location);
-  history.push(location.pathname);
-  console.log("history", history);
 
   const [searchResulte, setSearchResulte] = useState({});
   const { search, sort } = useParams();
@@ -59,7 +56,7 @@ const SearchPage = (props) => {
   }, []);
 
   useEffect(() => {
-    if (filter !== {}) {
+    if (filter) {
       const searchURL = `${props.serverURI}/offers?title=${search}&priceMin=${
         filter.priceMin || ""
       }&priceMax=${filter.priceMax || ""}&sort=&page=&color=${
@@ -80,6 +77,7 @@ const SearchPage = (props) => {
   }, [filter, search]);
   const handleOnClick = (value, set) => {
     set(!value);
+    console.log(value);
   };
   const filtersArray = [
     {
@@ -106,10 +104,26 @@ const SearchPage = (props) => {
     // {
     //   value: priceClicked,
     //   set: setPriceClicked,
-    //   key: "price",
-    //   setFilter: setPriceFilter,
-    //   valueFilter: priceFilter,
+    //   key: "priceMin",
+    //   setFilter: setPriceFilterMin,
+    //   valueFilter: priceFilterMin,
     // },
+    {
+      value: priceClicked,
+      set: setPriceClicked,
+      minAndMax: [
+        {
+          key: "priceMax",
+          setFilter: setPriceFilterMax,
+          valueFilter: priceFilterMax,
+        },
+        {
+          key: "priceMin",
+          setFilter: setPriceFilterMin,
+          valueFilter: priceFilterMin,
+        },
+      ],
+    },
     {
       value: conditionClicked,
       set: setConditionClicked,
@@ -121,7 +135,7 @@ const SearchPage = (props) => {
     //   value: sortClicked,
     //   set: setSortClicked,
     //   key: "sort",
-    //   setFilter: setColorFilter,
+    //   setFilter: setSortFilter,
     //   valueFilter: sortFilter,
     // },
     {
@@ -138,25 +152,61 @@ const SearchPage = (props) => {
 
     filtersArray.forEach((filterLeaved) => {
       if (filterLeaved.value) {
-        const filterCopy = { ...filter };
-        filterCopy[filterLeaved.key] = filterLeaved.valueFilter;
-        filterLeaved.setFilter(filterCopy);
+        console.log("ici", filterLeaved.value);
+        if (filterLeaved.value === priceClicked) {
+          filterLeaved.minAndMax.forEach((M) => {
+            const filterCopy = { ...filter };
+            filterCopy[M.key] = M.valueFilter;
+            M.setFilter(filterCopy);
+          });
+          filterLeaved.set(false);
+        } else {
+          const filterCopy = { ...filter };
+          filterCopy[filterLeaved.key] = filterLeaved.valueFilter;
+          filterLeaved.setFilter(filterCopy);
 
-        filterLeaved.set(false);
+          filterLeaved.set(false);
+        }
       }
     });
   };
 
   const SearchFilterOut = () => {
     filtersArray.forEach((filterLeaved) => {
-      if (filterLeaved.value) {
-        const filterCopy = { ...filter };
-        filterCopy[filterLeaved.key] = filterLeaved.valueFilter;
-        filterLeaved.setFilter(filterCopy);
+      // if (filterLeaved.value) {
+      //   const filterCopy = { ...filter };
+      //   filterCopy[filterLeaved.key] = filterLeaved.valueFilter;
+      //   filterLeaved.setFilter(filterCopy);
 
-        filterLeaved.set(false);
+      //   filterLeaved.set(false);
+      // }
+      console.log(filtersArray);
+      if (filterLeaved.value) {
+        if (filterLeaved.value === priceClicked) {
+          filterLeaved.minAndMax.forEach((M) => {
+            const filterCopy = { ...filter };
+            filterCopy[M.key] = M.valueFilter;
+            M.setFilter(filterCopy);
+          });
+          filterLeaved.set(false);
+        } else {
+          const filterCopy = { ...filter };
+          filterCopy[filterLeaved.key] = filterLeaved.valueFilter;
+          filterLeaved.setFilter(filterCopy);
+
+          filterLeaved.set(false);
+        }
       }
     });
+  };
+  const itemsToDisplay = () => {
+    const arrayOfItemsToDisplay = [];
+    searchResulte.forEach((item) => {
+      if (item.product_state === true) {
+        arrayOfItemsToDisplay.push(item);
+      }
+    });
+    return arrayOfItemsToDisplay;
   };
 
   return isReady === false ? (
@@ -298,7 +348,7 @@ const SearchPage = (props) => {
               handleOnClick(sortClicked, setSortClicked);
             }}
           >
-            Trier pa r&nbsp;
+            Trier par &nbsp;
             {sortClicked ? (
               <FontAwesomeIcon icon={faChevronUp} />
             ) : (
@@ -318,12 +368,18 @@ const SearchPage = (props) => {
                 }}
               >
                 <div>
-                  <input type="radio" name="sort" id="asc" value="asc" />{" "}
+                  <input
+                    type="radio"
+                    name="sort"
+                    id="asc"
+                    value="asc"
+                    defaultChecked={true}
+                  />
                   <label htmlFor="asc">Croissant</label>
                 </div>
                 <div>
-                  <input type="radio" name="sort" id="desc" value="desc" />{" "}
-                  <label htmlFor="asc">Décroissant</label>
+                  <input type="radio" name="sort" id="desc" value="desc" />
+                  <label htmlFor="desc">Décroissant</label>
                 </div>
               </form>
             </div>
@@ -460,7 +516,7 @@ const SearchPage = (props) => {
         </div>
       </section>
       <div>
-        {searchResulte.map((item) => {
+        {itemsToDisplay().map((item) => {
           const getImages = (item) => {
             const arrayOfImages = [];
 
@@ -485,6 +541,19 @@ const SearchPage = (props) => {
               to={`/product/${item._id}`}
               key={"offers" + item._id}
               className="item-card"
+              onClick={(event) => {
+                if (
+                  sizeClicked ||
+                  colorClicked ||
+                  brandClicked ||
+                  priceClicked ||
+                  conditionClicked ||
+                  sortClicked ||
+                  limitClicked
+                ) {
+                  event.preventDefault();
+                }
+              }}
             >
               <div className="owner">
                 <div>
@@ -508,7 +577,6 @@ const SearchPage = (props) => {
                 <p className="producte-name">{item.product_name}</p>
                 <p className="info">{item.product_price} €</p>
                 <p className="info">{item.product_details[0].size}</p>
-                {/* <p className="info">{item.owner.username}</p> */}
               </div>
             </Link>
           );

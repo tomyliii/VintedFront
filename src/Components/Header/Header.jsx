@@ -13,15 +13,11 @@ const Header = (props) => {
   const navigate = useNavigate();
   const [displayModal, setDisplayModal] = useState(false);
   const [signup, setSignup] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
   const [displaMessagelogin, setDisplayMessageLogin] = useState(false);
   const [searchArticle, setSearchArticle] = useState("");
   const [isChecked, setIsCheked] = useState(false);
   const [smallScreenModal, setSmallScreenModal] = useState(false);
   useEffect(() => {
-    if (Cookies.get("token")) {
-      setIsConnected(true);
-    }
     if (displayModal || smallScreenModal) {
       document.body.style.overflow = "hidden";
     } else {
@@ -87,15 +83,16 @@ const Header = (props) => {
                 </div>
               </form>
               <div className="header-btn">
-                {isConnected ? (
+                {props.userToken ? (
                   <button
                     className="disconnect-btn"
                     onClick={() => {
                       setSignup(false);
                       Cookies.remove("token", { secure: true });
                       Cookies.remove("username", { secure: true });
-                      // props.setUserToken("");
-                      setIsConnected(!isConnected);
+                      Cookies.remove("id", { secure: true });
+                      props.setId("");
+                      props.setUserToken("");
                       setDisplayMessageLogin(!displaMessagelogin);
                       setTimeout(() => {
                         setDisplayMessageLogin(displaMessagelogin);
@@ -137,15 +134,17 @@ const Header = (props) => {
       {smallScreenModal && (
         <div className="small-screen-modal">
           <div className="header-btn">
-            {isConnected ? (
+            {props.userToken ? (
               <button
                 className="disconnect-btn"
                 onClick={() => {
                   setSignup(false);
                   Cookies.remove("token", { secure: true });
                   Cookies.remove("username", { secure: true });
+                  Cookies.remove("id", { secure: true });
+                  props.setId("");
                   setSmallScreenModal(false);
-                  setIsConnected(!isConnected);
+                  props.setUserToken("");
                   setDisplayMessageLogin(!displaMessagelogin);
                   setTimeout(() => {
                     setDisplayMessageLogin(displaMessagelogin);
@@ -186,14 +185,15 @@ const Header = (props) => {
             setSignup={setSignup}
             displayMessagelogin={displaMessagelogin}
             setDisplayMessageLogin={setDisplayMessageLogin}
-            setIsConnected={setIsConnected}
-            isConnected={isConnected}
+            setUserToken={props.setUserToken}
+            userToken={props.userToken}
             setSmallScreenModal={setSmallScreenModal}
+            setId={props.setId}
           />
         ) : (
           <ModalLogin
-            isConnected={isConnected}
-            setIsConnected={setIsConnected}
+            setUserToken={props.setUserToken}
+            userToken={props.userToken}
             setDisplayModal={setDisplayModal}
             displayModal={displayModal}
             serverURI={props.serverURI}
@@ -202,6 +202,7 @@ const Header = (props) => {
             displayMessagelogin={displaMessagelogin}
             setDisplayMessageLogin={setDisplayMessageLogin}
             setSmallScreenModal={setSmallScreenModal}
+            setId={props.setId}
           />
         )
       ) : (
@@ -209,7 +210,7 @@ const Header = (props) => {
       )}
       {displaMessagelogin && (
         <div className="message-login">
-          {isConnected ? (
+          {props.userToken ? (
             <p>Bienvenue {Cookies.get("username")}</p>
           ) : (
             <p>Vous avez été déconecté.</p>

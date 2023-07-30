@@ -1,16 +1,15 @@
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import history from "../History/History";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DragAndDrop from "../Components/DragAndDrop/DragAndDrop";
+import Cookies from "js-cookie";
 
 export default function Publish({ userToken, serverURI }) {
   const location = useLocation();
-  console.log("location", location);
-  history.push(location.pathname);
-  console.log("history", history);
+  // console.log("location", location);
+
   const navigate = useNavigate();
 
   const [files, setFiles] = useState([]);
@@ -252,7 +251,7 @@ export default function Publish({ userToken, serverURI }) {
       </form>
     </main>
   ) : (
-    <div>Ca marche pas {userToken} </div>
-    // <Navigate to="/" />
+    // <div>Ca marche pas {userToken} </div>
+    <Navigate to="/" state={{ from: "/Publish", Modal: true }} />
   );
 }

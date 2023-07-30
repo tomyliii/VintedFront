@@ -176,7 +176,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 10px 0 0 10px;
+  margin: 10px 0 0 0px;
 }
 
 .owner-offers .item-card .owner > div > .icon-standar {
@@ -198,7 +198,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 0 10px 10px 10px;
+  padding: 0 10px 10px 5px;
 }
 
 .producte-name {
@@ -276,6 +276,11 @@ a {
 .offer-page .item-send-info > p > span:last-child {
   text-align: right;
   color: #757575;
+  text-transform: uppercase;
+}
+.offer-page .item-details .sold {
+  color: red;
+  font-weight: bold;
 }
 .offer-page .item-buttons {
   display: flex;
@@ -284,7 +289,9 @@ a {
   margin-bottom: 20px;
 }
 
-.offer-page .item-buttons button {
+.offer-page .item-buttons button,
+.offer-page .item-buttons a,
+.offer-page .modal a {
   padding-top: 5px;
   padding-bottom: 5px;
   background-color: white;
@@ -292,13 +299,23 @@ a {
   border-radius: 5px;
   color: #007782;
 }
-.offer-page .item-buttons button:first-child {
+.offer-page .item-buttons a,
+.offer-page .modal a {
   background-color: #007782;
   border: #007782 1px solid;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
+  text-decoration: none;
+  font-size: 16px;
 }
 
+.offer-page .item-buttons .disabled {
+  background-color: lightgray;
+  border: lightgray 1px solid;
+  color: white;
+}
 .offer-page .item-buttons button:last-child {
   background-color: white;
   border: #757575 1px solid;
@@ -394,6 +411,23 @@ a {
   width: 250px;
   bottom: -70px;
 }
+/*----------------------Offer Modal Redirection---------------------------------------------------------*/
+.offer-page .modal {
+  height: 100%;
+  position: fixed;
+}
+.offer-page .modal-offer-redirection {
+  position: fixed;
+  font-size: 24px;
+  text-align: center;
+  justify-content: space-around;
+  height: 300px;
+  overflow: hidden;
+}
+
+.lock {
+  overflow-y: hidden;
+}
 
 /*----------------------PublishPage---------------------------------------------------------*/
 .publish {
@@ -411,7 +445,7 @@ a {
 .publish > form > div {
   border: 1px solid black;
   background-color: white;
-
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -549,7 +583,9 @@ a {
     width: 100%;
     align-items: flex-end;
   }
-  .offer-page .item-buttons button {
+
+  .offer-page .item-buttons button,
+  .offer-page .item-buttons a {
     width: 50%;
   }
   .offer-page > div > aside {
@@ -566,7 +602,8 @@ a {
   .offer-page .item-infos .item-price {
     padding: 20px 0;
   }
-  .offer-page .item-buttons button {
+  .offer-page .item-buttons button,
+  .offer-page .item-buttons a {
     width: 100%;
   }
   .offer-page .owner-offers > .item-card {

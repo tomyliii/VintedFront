@@ -1,31 +1,29 @@
-// import { link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faHeart,
   faShieldHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import history from "../History/History";
 import { useLocation } from "react-router-dom";
+import format from "date-fns/format";
+import { useNavigate } from "react-router-dom";
 
 const OfferPage = (props) => {
   const location = useLocation();
-  history.push(location.pathname);
-  console.log("history", history);
-
-  const [isReady, setIsReady] = useState(false);
+  console.log("location", location);
+  const navigate = useNavigate();
   const { id } = useParams();
+  const [isReady, setIsReady] = useState(false);
   const [item, setItem] = useState({});
   const [images, setImage] = useState([]);
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(0);
   const [pages, setPage] = useState([]);
   const [selectedPage, setSelectedPage] = useState(1);
-  const [itemsShow, setItemsShow] = useState([]);
 
   const getImages = (item) => {
     const arrayOfImages = [];
@@ -51,11 +49,13 @@ const OfferPage = (props) => {
         const ownerItems = await axios.get(
           `${props.serverURI}/offersofowner/${id}`
         );
+
         setCount(ownerItems.data.data.count);
         setItems(ownerItems.data.data.offers);
         setItem(response.data.data);
         const arrayOfImages = getImages(response.data.data);
         setImage(arrayOfImages);
+        setIsReady(true);
         const arrayOfPages = [];
         let numberOfPages = Math.floor(ownerItems.data.data.count / 8);
         if (ownerItems.data.data.count % 8 !== 0) {
@@ -65,36 +65,31 @@ const OfferPage = (props) => {
           arrayOfPages.push(i + 1);
         }
         setPage(arrayOfPages);
-        const indexOfFirstArticleToShow = (selectedPage - 1) * 8;
-
-        const ArrayOfitemsToShow = items.splice(indexOfFirstArticleToShow, 8);
-
-        setItemsShow([...ArrayOfitemsToShow]);
-
-        setIsReady(true);
       })();
     } catch (error) {
       console.log(error.message);
     }
-  }, [id]);
-  const handleOnClick = async (value) => {
-    try {
-      const ownerItems = await axios.get(
-        `${props.serverURI}/offersofowner/${id}`
-      );
+  }, [id, selectedPage]);
 
-      const indexOfFirstArticleToShow = (value - 1) * 8;
+  const itemsToDisplay = (value) => {
+    const arrayOfItemsToDisplay = [];
+    value.forEach((item) => {
+      if (item.product_state === true) {
+        arrayOfItemsToDisplay.push(item);
+      }
+    });
+    return arrayOfItemsToDisplay;
+  };
 
-      const ArrayOfitemsToShow = ownerItems.data.data.offers.splice(
-        indexOfFirstArticleToShow,
-        8
-      );
+  const getShowId = () => {
+    const indexOfFirstArticleToShow = (selectedPage - 1) * 8;
 
-      setItemsShow([...ArrayOfitemsToShow]);
-      setSelectedPage(value);
-    } catch (error) {
-      console.log(error.message);
-    }
+    const ArrayOfitemsToShow = itemsToDisplay(items).splice(
+      indexOfFirstArticleToShow,
+      8
+    );
+
+    return ArrayOfitemsToShow;
   };
 
   return isReady === false ? (
@@ -102,7 +97,7 @@ const OfferPage = (props) => {
       <p>Loading, please wait...</p>
     </div>
   ) : (
-    <main className="offer-page">
+    <main className={`offer-page ${item.product_state === false && " lock"}`}>
       <div className="wrapper">
         <section className="item-pictures small-screen-offer">
           {images.map((image) => {
@@ -127,9 +122,10 @@ const OfferPage = (props) => {
             <p>({count}) articles disponibles</p>
           </div>
           <section className="owner-offers">
-            {itemsShow.map((item) => {
+            {getShowId().map((item) => {
               const images = getImages(item);
               const firstimage = images[0];
+
               return (
                 <Link
                   to={`/product/${item._id}`}
@@ -162,21 +158,23 @@ const OfferPage = (props) => {
                 </Link>
               );
             })}
-            <div className="page-selector">
-              {pages.map((page) => {
-                return (
-                  <div
-                    key={page}
-                    className={selectedPage === page ? "selected" : ""}
-                    onClick={() => {
-                      handleOnClick(page);
-                    }}
-                  >
-                    {page}
-                  </div>
-                );
-              })}
-            </div>
+            {pages.length !== 1 && (
+              <div className="page-selector">
+                {pages.map((page) => {
+                  return (
+                    <div
+                      key={page}
+                      className={selectedPage === page ? "selected" : ""}
+                      onClick={() => {
+                        setSelectedPage(page);
+                      }}
+                    >
+                      {page}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </section>
         </div>
         <aside>
@@ -216,12 +214,38 @@ const OfferPage = (props) => {
                 </p>
                 <p>
                   <span>NOMBRE DE VUE</span>
-                  <span>0</span>
+                  <span>{item.history.view}</span>
                 </p>
                 <p>
                   <span>AJOUTE</span>
-                  <span>IL Y A 1 JOUR</span>
+                  <span>
+                    {format(
+                      new Date(item.history.date_of_creation),
+                      " dd/MM/yyyy"
+                    )}
+                  </span>
                 </p>
+                {item.product_state === false && (
+                  <>
+                    <p className="sold">
+                      <span>STATUT</span>
+                      <span>VENDU</span>
+                    </p>
+                    <p>
+                      <span>ACHETEUR</span>
+                      <span>{item.buyer.username}</span>
+                    </p>
+                    <p>
+                      <span>DATE D'ACHAT</span>
+                      <span>
+                        {format(
+                          new Date(item.history.date_of_purchase),
+                          " dd/MM/yyyy"
+                        )}
+                      </span>
+                    </p>
+                  </>
+                )}
               </div>
             </div>
             <div className="item-description">
@@ -233,16 +257,68 @@ const OfferPage = (props) => {
               </p>
             </div>
             <div className="section-buttons">
-              <div> </div>
-              <div className="item-buttons">
-                <button>Acheter</button>
-                <button>Faire une offre</button>
-                <button>Message</button>
-                <button>
-                  <FontAwesomeIcon icon={faHeart} />
-                  &nbsp;Favoris
-                </button>
-              </div>
+              {item.product_state ? (
+                <div className="item-buttons">
+                  <Link
+                    to="/Payment"
+                    state={{
+                      title: item.product_name,
+                      price: item.product_price,
+                      id: item._id,
+                    }}
+                  >
+                    Acheter
+                  </Link>
+                  <button>Faire une offre</button>
+                  <button>Message</button>
+                  <button>
+                    <FontAwesomeIcon icon={faHeart} />
+                    &nbsp;Favoris
+                  </button>
+                </div>
+              ) : (
+                <div className="item-buttons">
+                  <Link
+                    to="/Payment"
+                    state={{
+                      title: item.product_name,
+                      price: item.product_price,
+                      id: item._id,
+                    }}
+                    className="disabled"
+                    onClick={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    Acheter
+                  </Link>
+                  <button
+                    className="disabled"
+                    onClick={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    Faire une offre
+                  </button>
+                  <button
+                    className="disabled"
+                    onClick={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    Message
+                  </button>
+                  <button
+                    className="disabled"
+                    onClick={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faHeart} />
+                    &nbsp;Favoris
+                  </button>
+                </div>
+              )}
             </div>
             <div className="item-protect-customer">
               <div>
@@ -280,6 +356,26 @@ const OfferPage = (props) => {
           </section>
         </aside>
       </div>
+      {item.product_state === false &&
+        props.id !== (item.owner._id || item.buyer._id) && (
+          <section
+            className="modal"
+            onClick={(event) => {
+              navigate("/");
+              console.log("test");
+            }}
+          >
+            <div
+              className="modal-offer-redirection"
+              onClick={(event) => {
+                event.stopPropagation();
+              }}
+            >
+              <p>OoouuupS...Cet article a été victime de son succes!</p>
+              <Link to="/">Home</Link>
+            </div>
+          </section>
+        )}
     </main>
   );
 };

@@ -10,34 +10,46 @@ import SearchPage from "./Pages/SearchPage";
 import PageNotFound from "./Pages/PageNotFound";
 import Cookies from "js-cookie";
 import Publish from "./Pages/Publish";
+import Payment from "./Pages/Payment";
 // const serverURI = "http://127.0.0.1:3000";
 const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
 function App() {
   const [userToken, setUserToken] = useState(Cookies.get("token") || "");
-
+  const [id, setId] = useState(Cookies.get("id") || "");
   return (
     <>
       <Router>
-        <Header serverURI={serverURI} setUserToken={setUserToken} />
+        <Header
+          serverURI={serverURI}
+          setUserToken={setUserToken}
+          userToken={userToken}
+          setId={setId}
+        />
         <Routes>
           <Route path="/" element={<HomePage serverURI={serverURI} />}></Route>
           <Route
             path="product/:id"
-            element={<OfferPage serverURI={serverURI} userToken={userToken} />}
-          />
-          <Route
-            path="SearchPageBrand/:brand"
             element={
-              <SearchPageBrand serverURI={serverURI} userToken={userToken} />
+              <OfferPage serverURI={serverURI} userToken={userToken} id={id} />
             }
           />
           <Route
+            path="SearchPageBrand/:brand"
+            element={<SearchPageBrand serverURI={serverURI} />}
+          />
+          <Route
             path="SearchPage/:search/:sort"
-            element={<SearchPage serverURI={serverURI} userToken={userToken} />}
+            element={<SearchPage serverURI={serverURI} />}
           />
           <Route
             path="Publish"
             element={<Publish serverURI={serverURI} userToken={userToken} />}
+          />
+          <Route
+            path="Payment"
+            element={
+              <Payment serverURI={serverURI} userToken={userToken} id={id} />
+            }
           />
           <Route
             path="*"

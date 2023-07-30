@@ -4,14 +4,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import history from "../History/History";
-import { useLocation } from "react-router-dom";
 
 const SearchPage = (props) => {
-  const location = useLocation();
-  console.log("location", location);
-  history.push(location.pathname);
-  console.log("history", history);
   const { brand } = useParams();
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -27,12 +21,21 @@ const SearchPage = (props) => {
       console.log(error.message);
     }
   }, []);
+  const itemsToDisplay = () => {
+    const arrayOfItemsToDisplay = [];
+    data.forEach((item) => {
+      if (item.product_state === true) {
+        arrayOfItemsToDisplay.push(item);
+      }
+    });
+    return arrayOfItemsToDisplay;
+  };
 
   return (
     <section className="news-feed-section wrapper">
       <h3>Recherche par marque: {brand}</h3>
       <div>
-        {data.map((item) => {
+        {itemsToDisplay().map((item) => {
           const getImages = (item) => {
             const arrayOfImages = [];
 

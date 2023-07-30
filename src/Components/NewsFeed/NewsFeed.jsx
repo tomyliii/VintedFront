@@ -41,7 +41,15 @@ const NewsFeed = (props) => {
       console.log(error.message);
     }
   };
-
+  const itemsToDisplay = () => {
+    const arrayOfItemsToDisplay = [];
+    data.forEach((item) => {
+      if (item.product_state === true) {
+        arrayOfItemsToDisplay.push(item);
+      }
+    });
+    return arrayOfItemsToDisplay;
+  };
   return isReady === false ? (
     <div className="loading">
       <p>Loading, please wait...</p>
@@ -50,7 +58,7 @@ const NewsFeed = (props) => {
     <section className="news-feed-section wrapper">
       <h3>Fil d'actu</h3>
       <div>
-        {data.map((item) => {
+        {itemsToDisplay().map((item) => {
           const getImages = (item) => {
             const arrayOfImages = [];
 
@@ -103,21 +111,23 @@ const NewsFeed = (props) => {
             </Link>
           );
         })}
-        <div className="page-selector">
-          {pages.map((page) => {
-            return (
-              <div
-                key={page}
-                className={selectedPage === page ? "selected" : ""}
-                onClick={() => {
-                  handleOnClick(page);
-                }}
-              >
-                {page}
-              </div>
-            );
-          })}
-        </div>
+        {pages.lenth !== 1 && (
+          <div className="page-selector">
+            {pages.map((page) => {
+              return (
+                <div
+                  key={page}
+                  className={selectedPage === page ? "selected" : ""}
+                  onClick={() => {
+                    handleOnClick(page);
+                  }}
+                >
+                  {page}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,18 +1,14 @@
-// import { link } from "react-router-dom";
 import SearchByBrand from "../Components/SearchByBrand/SearchByBrand";
 import SearchSuggestions from "../Components/SearchSuggestions/SearchSuggestions";
 import NewsFeed from "../Components/NewsFeed/NewsFeed";
 import PopularItems from "../Components/PopularItems/PopularItems";
 import Dechirer from "../assets/Images/dechirer.svg";
 import { Link } from "react-router-dom";
-import history from "../History/History";
 import { useLocation } from "react-router-dom";
 
 const HomePage = (props) => {
   const location = useLocation();
   console.log("location", location);
-  history.push(location.pathname);
-  console.log("history", history);
 
   return (
     <main>

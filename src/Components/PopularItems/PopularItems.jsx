@@ -18,6 +18,15 @@ const PopularItems = (props) => {
       console.log(error.message);
     }
   }, []);
+  const itemsToDisplay = () => {
+    const arrayOfItemsToDisplay = [];
+    data.forEach((item) => {
+      if (item.product_state === true) {
+        arrayOfItemsToDisplay.push(item);
+      }
+    });
+    return arrayOfItemsToDisplay;
+  };
 
   return isReady === false ? (
     <div className="loading">
@@ -27,7 +36,7 @@ const PopularItems = (props) => {
     <section className="popular wrapper">
       <h3>Articles populaires</h3>
       <div>
-        {data.map((item) => {
+        {itemsToDisplay().map((item) => {
           const getImages = (item) => {
             const arrayOfImages = [];
 

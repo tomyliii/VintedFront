@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import history from "../../History/History";
+
 import DragAndDropSingUp from "../DragAndDropSingUp/DragAndDropSingUp";
 
 const Modal = (props) => {
@@ -144,21 +144,18 @@ const Modal = (props) => {
         Cookies.set("username", response.data.account.username, 1, {
           secure: true,
         });
-
+        Cookies.set("id", response.data._id, 1, { secure: true });
+        props.setId(response.data._id);
         props.setDisplayModal(!props.displayModal);
         props.setSmallScreenModal(false);
-        props.setIsConnected(!props.isConnected);
+        props.setUserToken(Cookies.get("token"));
         props.setSignup(!props.signup);
         props.setDisplayMessageLogin(!props.displayMessagelogin);
         setTimeout(() => {
           props.setDisplayMessageLogin(props.displayMessagelogin);
         }, 3000);
 
-        if (history.at(-1) === "/Publish") {
-          navigate("/Publish");
-        } else {
-          navigate("/");
-        }
+        navigate("/");
       } catch (error) {
         setErrorConditions(error.response.data.message);
       }

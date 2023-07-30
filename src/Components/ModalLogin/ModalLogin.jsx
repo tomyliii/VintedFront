@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import history from "../../History/History";
 
 const ModalLogin = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,8 +14,8 @@ const ModalLogin = (props) => {
   const navigate = useNavigate();
 
   const handleOnSubmit = async (event) => {
+    event.preventDefault();
     try {
-      event.preventDefault();
       if (mail && password) {
         const response = await axios.post(`${props.serverURI}/user/login`, {
           mail: mail,
@@ -26,20 +25,17 @@ const ModalLogin = (props) => {
         Cookies.set("username", response.data.account.username, 1, {
           secure: true,
         });
-
+        Cookies.set("id", response.data._id, 1, { secure: true });
+        props.setId(response.data._id);
         props.setDisplayModal(!props.displayModal);
-        props.setIsConnected(!props.isConnected);
+        props.setUserToken(Cookies.get("token"));
         props.setSmallScreenModal(false);
         props.setDisplayMessageLogin(!props.displayMessagelogin);
         setTimeout(() => {
           props.setDisplayMessageLogin(props.displayMessagelogin);
         }, 3000);
 
-        if (history.at(-1) === "/Publish") {
-          navigate("/Publish");
-        } else {
-          navigate("/");
-        }
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

@@ -1,0 +1,9 @@
+.payment-section {
+  align-items: center;
+}
+
+.payment-section form {
+  width: 600px;
+  border: 1px solid red;
+  margin-top: 100px;
+}
