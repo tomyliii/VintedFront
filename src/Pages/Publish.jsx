@@ -8,7 +8,6 @@ import Cookies from "js-cookie";
 
 export default function Publish({ userToken, serverURI }) {
   const location = useLocation();
-  // console.log("location", location);
 
   const navigate = useNavigate();
 

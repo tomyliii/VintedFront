@@ -4,10 +4,8 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
 
 const CheckoutForm = (props) => {
-  console.log(props);
   const stripe = useStripe();
   const elements = useElements();
-  const [user, setUser] = useState({});
   const [completed, setCompleted] = useState(false);
 
   const handleOnSubmit = async (event) => {
@@ -17,7 +15,7 @@ const CheckoutForm = (props) => {
       const stripeResponse = await stripe.createToken(cardElement, {
         name: "Nom du l utilisateur",
       });
-      console.log(stripeResponse);
+
       const stripeToken = stripeResponse.token.id;
       const response = await axios.post(`${props.serverURI}/pay`, {
         stripeToken,
@@ -26,12 +24,14 @@ const CheckoutForm = (props) => {
         price: props.price,
         title: props.title,
       });
+      console.log(response);
       if (response.data.status === "succeeded") {
         setCompleted(true);
       }
     } catch (error) {
+      console.log(error);
       if (error.status) {
-        console.log(error.status, { message: error.message });
+        console.log({ status: error.status, message: error.message });
       } else {
         console.log(error.message);
       }

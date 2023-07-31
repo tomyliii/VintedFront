@@ -53,6 +53,7 @@ const ModalLogin = (props) => {
         onClick={(event) => {
           event.stopPropagation();
         }}
+        className="login-modal"
       >
         <button
           onClick={() => {

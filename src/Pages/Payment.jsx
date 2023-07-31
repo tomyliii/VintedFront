@@ -10,7 +10,7 @@ const stripePromise = loadStripe(
 const Payment = (props) => {
   const location = useLocation();
   const { title, price, id } = location.state;
-  console.log(title, price, id);
+
   return props.userToken ? (
     <Elements stripe={stripePromise}>
       <CheckoutForm

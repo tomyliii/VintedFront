@@ -8,7 +8,6 @@ import { useLocation } from "react-router-dom";
 
 const HomePage = (props) => {
   const location = useLocation();
-  console.log("location", location);
 
   return (
     <main>

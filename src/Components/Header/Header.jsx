@@ -37,7 +37,7 @@ const Header = (props) => {
   const handleOnClickSmallScreenModal = () => {
     setSmallScreenModal(false);
   };
-  console.log(Cookies.get("token"));
+
   return (
     <>
       <header>

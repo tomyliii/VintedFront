@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 const OfferPage = (props) => {
   const location = useLocation();
-  console.log("location", location);
+
   const navigate = useNavigate();
   const { id } = useParams();
   const [isReady, setIsReady] = useState(false);

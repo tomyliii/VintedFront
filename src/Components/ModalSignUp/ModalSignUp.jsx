@@ -107,7 +107,7 @@ const Modal = (props) => {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    console.log(file.length);
+
     if (
       file.length !== 0 &&
       username &&
