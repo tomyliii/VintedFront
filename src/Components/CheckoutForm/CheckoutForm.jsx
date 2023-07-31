@@ -15,7 +15,7 @@ const CheckoutForm = (props) => {
       const stripeResponse = await stripe.createToken(cardElement, {
         name: "Nom du l utilisateur",
       });
-
+      console.log(props.id);
       const stripeToken = stripeResponse.token.id;
       const response = await axios.post(`${props.serverURI}/pay`, {
         stripeToken,
