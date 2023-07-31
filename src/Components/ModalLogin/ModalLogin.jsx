@@ -21,6 +21,7 @@ const ModalLogin = (props) => {
           mail: mail,
           password: password,
         });
+        console.log(response.data);
         Cookies.set("token", response.data.token, 1, { secure: true });
         Cookies.set("username", response.data.account.username, 1, {
           secure: true,
@@ -30,6 +31,7 @@ const ModalLogin = (props) => {
         props.setDisplayModal(!props.displayModal);
         props.setUserToken(Cookies.get("token"));
         props.setSmallScreenModal(false);
+        props.setUsername(response.data.account.username);
         props.setDisplayMessageLogin(!props.displayMessagelogin);
         setTimeout(() => {
           props.setDisplayMessageLogin(props.displayMessagelogin);

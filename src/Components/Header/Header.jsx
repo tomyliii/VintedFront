@@ -92,6 +92,7 @@ const Header = (props) => {
                       Cookies.remove("username", { secure: true });
                       Cookies.remove("id", { secure: true });
                       props.setId("");
+                      props.setUsername("");
                       props.setUserToken("");
                       setDisplayMessageLogin(!displaMessagelogin);
                       setTimeout(() => {
@@ -143,6 +144,7 @@ const Header = (props) => {
                   Cookies.remove("username", { secure: true });
                   Cookies.remove("id", { secure: true });
                   props.setId("");
+                  props.setUsername("");
                   setSmallScreenModal(false);
                   props.setUserToken("");
                   setDisplayMessageLogin(!displaMessagelogin);
@@ -189,6 +191,7 @@ const Header = (props) => {
             userToken={props.userToken}
             setSmallScreenModal={setSmallScreenModal}
             setId={props.setId}
+            setUsername={props.setUsername}
           />
         ) : (
           <ModalLogin
@@ -203,6 +206,7 @@ const Header = (props) => {
             setDisplayMessageLogin={setDisplayMessageLogin}
             setSmallScreenModal={setSmallScreenModal}
             setId={props.setId}
+            setUsername={props.setUsername}
           />
         )
       ) : (

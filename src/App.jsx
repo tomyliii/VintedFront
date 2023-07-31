@@ -16,6 +16,7 @@ const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
 function App() {
   const [userToken, setUserToken] = useState(Cookies.get("token") || "");
   const [id, setId] = useState(Cookies.get("id") || "");
+  const [username, setUsername] = useState(Cookies.get("username"));
   return (
     <>
       <Router>
@@ -24,6 +25,7 @@ function App() {
           setUserToken={setUserToken}
           userToken={userToken}
           setId={setId}
+          setUsername={setUsername}
         />
         <Routes>
           <Route path="/" element={<HomePage serverURI={serverURI} />}></Route>
@@ -48,7 +50,12 @@ function App() {
           <Route
             path="Payment"
             element={
-              <Payment serverURI={serverURI} userToken={userToken} id={id} />
+              <Payment
+                serverURI={serverURI}
+                userToken={userToken}
+                id={id}
+                username={username}
+              />
             }
           />
           <Route

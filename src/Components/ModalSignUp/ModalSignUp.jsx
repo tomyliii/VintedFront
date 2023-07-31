@@ -144,11 +144,13 @@ const Modal = (props) => {
         Cookies.set("username", response.data.account.username, 1, {
           secure: true,
         });
+        console.log(response.data);
         Cookies.set("id", response.data._id, 1, { secure: true });
         props.setId(response.data._id);
         props.setDisplayModal(!props.displayModal);
         props.setSmallScreenModal(false);
         props.setUserToken(Cookies.get("token"));
+        props.setUsername(response.data.account.username);
         props.setSignup(!props.signup);
         props.setDisplayMessageLogin(!props.displayMessagelogin);
         setTimeout(() => {
