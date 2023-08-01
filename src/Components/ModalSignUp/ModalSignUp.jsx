@@ -156,8 +156,11 @@ const Modal = (props) => {
         setTimeout(() => {
           props.setDisplayMessageLogin(props.displayMessagelogin);
         }, 3000);
-
-        navigate("/");
+        if (props.path === "/") {
+          navigate("/");
+        } else {
+          navigate(props.path);
+        }
       } catch (error) {
         setErrorConditions(error.response.data.message);
       }

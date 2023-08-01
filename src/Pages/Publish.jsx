@@ -249,7 +249,6 @@ export default function Publish({ userToken, serverURI }) {
       </form>
     </main>
   ) : (
-    // <div>Ca marche pas {userToken} </div>
     <Navigate to="/" state={{ from: "/Publish" }} />
   );
 }

@@ -50,7 +50,7 @@ const Payment = (props) => {
       </div>
     </main>
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/" state={{ from: "/Publish" }} />
   );
 };
 

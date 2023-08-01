@@ -10,6 +10,7 @@ import Toggle from "../Toggle/Toggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 const Header = (props) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [displayModal, setDisplayModal] = useState(false);
   const [signup, setSignup] = useState(false);
@@ -19,13 +20,23 @@ const Header = (props) => {
   const [smallScreenModal, setSmallScreenModal] = useState(false);
   const [path, setPath] = useState("/");
   console.log(location);
-
   useEffect(() => {
+    if (location.state?.from) {
+      const { from } = location.state;
+      setPath(from);
+      setDisplayModal(true);
+      setSmallScreenModal(true);
+    }
     if (displayModal || smallScreenModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
+    // if (from) {
+    //   setPath(from);
+    //   setDisplayModal(true);
+    //   setSmallScreenModal(true);
+    // }
   }, [displayModal, smallScreenModal]);
 
   const handleOnSubmit = async (event) => {
