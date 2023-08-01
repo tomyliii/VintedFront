@@ -176,6 +176,22 @@ const Header = (props) => {
             >
               Vends tes articles
             </Link>
+            <Link
+              to={"/Purchases"}
+              onClick={() => {
+                handleOnClickSmallScreenModal();
+              }}
+            >
+              Mes achats
+            </Link>
+            <Link
+              to={"/Sales"}
+              onClick={() => {
+                handleOnClickSmallScreenModal();
+              }}
+            >
+              Mes ventes
+            </Link>
             <button>?</button>
           </div>
         </div>

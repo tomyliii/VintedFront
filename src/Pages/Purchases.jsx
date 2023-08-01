@@ -15,7 +15,6 @@ const Purchases = (props) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log(response);
 
         setPurchases(response.data);
         setIsReady(true);

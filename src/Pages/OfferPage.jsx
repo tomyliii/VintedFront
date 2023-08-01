@@ -85,14 +85,12 @@ const OfferPage = (props) => {
     item?.product_state === false &&
     !(props.id !== item.owner._id || item.buyer._id)
   ) {
-    console.log("OKKKKK timeout");
     setREdirection(true);
     setTimeout(() => {
       navigate("/");
     }, 5000);
   }
   if (!props.userToken) {
-    console.log("OKKKKK timeout2");
     setTimeout(() => {
       navigate("/");
     }, 5000);
