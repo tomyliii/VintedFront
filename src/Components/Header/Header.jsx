@@ -19,24 +19,13 @@ const Header = (props) => {
   const [isChecked, setIsCheked] = useState(false);
   const [smallScreenModal, setSmallScreenModal] = useState(false);
   const [path, setPath] = useState("/");
-  console.log(location);
+
   useEffect(() => {
-    if (location.state?.from) {
-      const { from } = location.state;
-      setPath(from);
-      setDisplayModal(true);
-      setSmallScreenModal(true);
-    }
     if (displayModal || smallScreenModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-    // if (from) {
-    //   setPath(from);
-    //   setDisplayModal(true);
-    //   setSmallScreenModal(true);
-    // }
   }, [displayModal, smallScreenModal]);
 
   const handleOnSubmit = async (event) => {
