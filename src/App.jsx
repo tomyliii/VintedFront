@@ -14,9 +14,9 @@ import Payment from "./Pages/Payment";
 import Purchases from "./Pages/Purchases";
 import Sales from "./Pages/Sales";
 import SearchPageAll from "./Pages/SearchPageAll";
-const serverURI = "http://127.0.0.1:3000";
+// const serverURI = "http://127.0.0.1:3000";
 
-// const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
+const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
 function App() {
   const [userToken, setUserToken] = useState(Cookies.get("token") || "");
   const [id, setId] = useState(Cookies.get("id") || "");
