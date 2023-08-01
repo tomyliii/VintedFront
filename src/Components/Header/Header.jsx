@@ -1,5 +1,5 @@
 import "./header.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/Images/logoVinted.svg";
 import ModalSignUp from "../ModalSignUp/ModalSignUp";
 import ModalLogin from "../ModalLogin/ModalLogin";
@@ -17,6 +17,9 @@ const Header = (props) => {
   const [searchArticle, setSearchArticle] = useState("");
   const [isChecked, setIsCheked] = useState(false);
   const [smallScreenModal, setSmallScreenModal] = useState(false);
+  const [path, setPath] = useState("/");
+  console.log(location);
+
   useEffect(() => {
     if (displayModal || smallScreenModal) {
       document.body.style.overflow = "hidden";
@@ -200,6 +203,7 @@ const Header = (props) => {
       {displayModal ? (
         signup ? (
           <ModalSignUp
+            path={path}
             setDisplayModal={setDisplayModal}
             displayModal={displayModal}
             serverURI={props.serverURI}
@@ -215,6 +219,7 @@ const Header = (props) => {
           />
         ) : (
           <ModalLogin
+            path={path}
             setUserToken={props.setUserToken}
             userToken={props.userToken}
             setDisplayModal={setDisplayModal}

@@ -55,7 +55,7 @@ const OfferPage = (props) => {
         setItem(response.data.data);
         const arrayOfImages = getImages(response.data.data);
         setImage(arrayOfImages);
-        setIsReady(true);
+
         const arrayOfPages = [];
         let numberOfPages = Math.floor(ownerItems.data.data.count / 8);
         if (ownerItems.data.data.count % 8 !== 0) {
@@ -65,6 +65,7 @@ const OfferPage = (props) => {
           arrayOfPages.push(i + 1);
         }
         setPage(arrayOfPages);
+        setIsReady(true);
       })();
     } catch (error) {
       console.log(error.message);

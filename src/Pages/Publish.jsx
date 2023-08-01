@@ -250,6 +250,6 @@ export default function Publish({ userToken, serverURI }) {
     </main>
   ) : (
     // <div>Ca marche pas {userToken} </div>
-    <Navigate to="/" state={{ from: "/Publish", Modal: true }} />
+    <Navigate to="/" state={{ from: "/Publish" }} />
   );
 }

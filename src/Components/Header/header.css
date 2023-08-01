@@ -80,7 +80,9 @@ header .toggle-section p {
   border-radius: 5px;
   height: 30px;
   color: white;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 5px 10px;
   font-size: 16px;
   text-decoration: none;

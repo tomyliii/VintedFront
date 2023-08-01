@@ -74,7 +74,7 @@ const PopularItems = (props) => {
             </Link>
           );
         })}
-        <Link to={`/SearchPage/${"all"}`} className="last-card">
+        <Link to={`/SearchPageAll`} className="last-card">
           <p>voir tout les articles</p>
         </Link>
       </div>
