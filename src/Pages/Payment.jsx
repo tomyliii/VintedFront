@@ -10,18 +10,45 @@ const stripePromise = loadStripe(
 const Payment = (props) => {
   const location = useLocation();
   const { title, price, id } = location.state;
-
+  const insuranceCosts = 0.4;
+  const shippingFees = 3.99;
+  const totalPrice = price + insuranceCosts + shippingFees;
   return props.userToken ? (
-    <Elements stripe={stripePromise}>
-      <CheckoutForm
-        id={props.id}
-        userToken={props.userToken}
-        offerId={id}
-        price={price}
-        title={title}
-        serverURI={props.serverURI}
-      />
-    </Elements>
+    <main className="payment-page">
+      <div className="wrapper">
+        <section className="resum-section">
+          <h4>Résumé de la commande</h4>
+          <div>
+            <p>
+              <span>Commande</span>
+              <span>{price.toFixed(2).toString().replace(".", ",")} €</span>
+            </p>
+            <p>
+              <span>Frais de protection acheteurs</span>
+              <span>
+                {insuranceCosts.toFixed(2).toString().replace(".", ",")} €
+              </span>
+            </p>
+            <p>
+              <span>Frais de livraison</span>
+              <span>
+                {shippingFees.toFixed(2).toString().replace(".", ",")} €
+              </span>
+            </p>
+          </div>
+        </section>
+        <Elements stripe={stripePromise}>
+          <CheckoutForm
+            userId={props.id}
+            offerId={id}
+            title={title}
+            serverURI={props.serverURI}
+            totalPrice={totalPrice}
+            username={props.username}
+          />
+        </Elements>
+      </div>
+    </main>
   ) : (
     <Navigate to="/" />
   );

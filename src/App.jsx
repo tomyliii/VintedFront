@@ -11,12 +11,14 @@ import PageNotFound from "./Pages/PageNotFound";
 import Cookies from "js-cookie";
 import Publish from "./Pages/Publish";
 import Payment from "./Pages/Payment";
-// const serverURI = "http://127.0.0.1:3000";
-const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
+import Purchases from "./Pages/Purchases";
+import Sales from "./Pages/Sales";
+const serverURI = "http://127.0.0.1:3000";
+// const serverURI = "https://site--vintedback--tzmxcvqjqbzq.code.run";
 function App() {
   const [userToken, setUserToken] = useState(Cookies.get("token") || "");
   const [id, setId] = useState(Cookies.get("id") || "");
-  const [username, setUsername] = useState(Cookies.get("username"));
+  const [username, setUsername] = useState(Cookies.get("username") || "");
   return (
     <>
       <Router>
@@ -59,11 +61,28 @@ function App() {
             }
           />
           <Route
-            path="*"
+            path="Purchases"
             element={
-              <PageNotFound serverURI={serverURI} userToken={userToken} />
+              <Purchases
+                serverURI={serverURI}
+                userToken={userToken}
+                username={username}
+                id={id}
+              />
             }
           />
+          <Route
+            path="Sales"
+            element={
+              <Sales
+                serverURI={serverURI}
+                userToken={userToken}
+                username={username}
+                id={id}
+              />
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </>

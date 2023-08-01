@@ -130,6 +130,10 @@ const Header = (props) => {
             <li>A propos</li>
             <li>Notre plateforme</li>
           </ul>
+          <div className="buy-sale">
+            <Link to={"/Purchases"}>Mes achats</Link>
+            <Link to={"/Sales"}>Mes ventes</Link>
+          </div>
         </nav>
       </header>
       {smallScreenModal && (

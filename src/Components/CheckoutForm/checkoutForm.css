@@ -1,9 +1,57 @@
-.payment-section {
-  align-items: center;
+.payment-section,
+.payment-succeeded {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-.payment-section form {
-  width: 600px;
-  border: 1px solid red;
-  margin-top: 100px;
+.payment-succeeded {
+  align-items: center;
+  text-align: center;
+}
+.payment-section {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 43px;
+}
+
+.payment-section > div span,
+.payment-succeeded span {
+  font-weight: bold;
+}
+
+.payment-succeeded span {
+  color: #02c06d;
+  font-size: 24px;
+}
+.payment-succeeded > a {
+  font-size: 16px;
+  text-decoration: none;
+  background-color: #007782;
+  padding: 10px 15px;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+.payment-succeeded > p {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.payment-section .error-Message {
+  text-align: center;
+}
+.payment-section > form {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.payment-section > form > button {
+  padding: 15px;
+  background-color: #02c06d;
+  color: white;
+  border-radius: 5px;
+  border: none;
 }

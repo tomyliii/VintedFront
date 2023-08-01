@@ -2,9 +2,8 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DragAndDrop from "../Components/DragAndDrop/DragAndDrop";
-import Cookies from "js-cookie";
 
 export default function Publish({ userToken, serverURI }) {
   const location = useLocation();

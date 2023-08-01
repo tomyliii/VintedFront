@@ -517,6 +517,139 @@ a {
   font-weight: bold;
   color: red;
 }
+/*----------------------Payment---------------------------------------------------------*/
+.payment-page {
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+.payment-page > div {
+  margin-top: 40px;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 600px;
+  margin: 40px auto 0;
+}
+.resum-section {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  border-bottom: 1px solid rgb(211, 210, 210);
+}
+
+.resum-section > h4 {
+  color: #c6c6c6;
+  font-size: medium;
+}
+.resum-section > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.resum-section > div > p {
+  display: flex;
+  justify-content: space-between;
+}
+.total-price > P {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+/*---------------------Purchases/sales Page---------------------------------------------------------*/
+.purchases-page,
+.sales-page {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+  padding-top: 60px;
+}
+
+.purchases-page > section:first-of-type,
+.sales-page > section:first-of-type {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.purchases-page h2,
+.sales-page h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+.purchases-page .purchase-card,
+.sales-page .sale-card {
+  background-color: white;
+
+  width: 100%;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.sales-page .sale-card h4,
+.purchases-page .purchase-card h4 {
+  margin-bottom: 40px;
+}
+.sales-page .sale-card > div,
+.purchases-page .purchase-card > div {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+}
+.sales-page .sale-card a,
+.purchases-page .purchase-card a {
+  flex: 0.2;
+}
+.sales-page .sale-card .sale-details,
+.purchases-page .purchase-card .purchase-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 20px;
+  color: #757575;
+  text-transform: uppercase;
+}
+.sales-page .sale-card img,
+.purchases-page .purchase-card img {
+  object-fit: cover;
+  width: 100%;
+}
+.sale-details > p,
+.purchase-details > p {
+  display: flex;
+  justify-content: space-between;
+}
+.no-sale,
+.no-purchase {
+  background-color: white;
+  border-radius: 5px;
+  width: 500px;
+  margin: 60px auto;
+  padding: 20px;
+}
+.sales-page > .no-sale a,
+.purchases-page > .no-purchase a {
+  margin-top: 30px;
+  background-color: #007782;
+  border: #007782 1px solid;
+  border-radius: 5px;
+  height: 30px;
+  color: white;
+  text-align: center;
+  padding: 5px 10px;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.not-connected {
+  margin: 60px;
+  text-align: center;
+  width: 80%;
+  margin: 60px auto;
+}
 
 @media (max-width: 1170px) {
   .wrapper {

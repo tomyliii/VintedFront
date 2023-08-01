@@ -12,7 +12,6 @@ import { useLocation } from "react-router-dom";
 
 const SearchPage = (props) => {
   const location = useLocation();
-  console.log("location", location);
 
   const [searchResulte, setSearchResulte] = useState({});
   const { search, sort } = useParams();
@@ -341,7 +340,7 @@ const SearchPage = (props) => {
           )}
         </div>
 
-        <div>
+        {/* <div>
           <div
             className={`filter ${sortFilter && "marked"}`}
             onClick={() => {
@@ -384,7 +383,7 @@ const SearchPage = (props) => {
               </form>
             </div>
           )}
-        </div>
+        </div> */}
         <div>
           <div
             className={`filter ${conditionFilter && "marked"}`}
@@ -425,7 +424,7 @@ const SearchPage = (props) => {
             </div>
           )}
         </div>
-        <div>
+        {/* <div>
           <div
             className={`filter ${priceFilter && "marked"}`}
             onClick={() => {
@@ -474,7 +473,7 @@ const SearchPage = (props) => {
               </form>
             </div>
           )}
-        </div>
+        </div> */}
 
         <div>
           <div
