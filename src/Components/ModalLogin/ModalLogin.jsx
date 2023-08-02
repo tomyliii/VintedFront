@@ -36,11 +36,8 @@ const ModalLogin = (props) => {
         setTimeout(() => {
           props.setDisplayMessageLogin(props.displayMessagelogin);
         }, 3000);
-        if (props.path === "/") {
-          navigate("/");
-        } else {
-          navigate(props.path);
-        }
+
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

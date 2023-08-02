@@ -2,17 +2,23 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useLocation } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Components/CheckoutForm/CheckoutForm";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const stripePromise = loadStripe(
   "pk_test_51NZAKhBqSF0s0rWOfYYmdoQ6EqnRDYqqPliPQ94OBigJAZv7i5Dmq57pygMnRJFGY5IEUlhfAJOlyaBw2W72PvHV006t94ctfk"
 );
 
 const Payment = (props) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { title, price, id } = location.state;
   const insuranceCosts = 0.4;
   const shippingFees = 3.99;
   const totalPrice = price + insuranceCosts + shippingFees;
+  if (!props.userToken) {
+    setTimeout(() => {
+      navigate("/");
+    }, 5000);
+  }
   return props.userToken ? (
     <main className="payment-page">
       <div className="wrapper">
@@ -50,7 +56,12 @@ const Payment = (props) => {
       </div>
     </main>
   ) : (
-    <Navigate to="/" state={{ from: "/Payment" }} />
+    <div className="not-connected">
+      <p>
+        OOUUUuuuuupppssss! Vous n'est pas connecté(e) vous allez etre
+        redirigé(e) automatiquement vers la page d'accueil...
+      </p>
+    </div>
   );
 };
 

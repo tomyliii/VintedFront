@@ -4,17 +4,14 @@ import {
   faHeart,
   faShieldHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 import format from "date-fns/format";
 import { useNavigate } from "react-router-dom";
 
 const OfferPage = (props) => {
-  const location = useLocation();
-
   const navigate = useNavigate();
   const { id } = useParams();
   const [isReady, setIsReady] = useState(false);
@@ -24,7 +21,7 @@ const OfferPage = (props) => {
   const [count, setCount] = useState(0);
   const [pages, setPage] = useState([]);
   const [selectedPage, setSelectedPage] = useState(1);
-  const [redirection, setREdirection] = useState(false);
+
   const getImages = (item) => {
     const arrayOfImages = [];
 
@@ -65,6 +62,7 @@ const OfferPage = (props) => {
           arrayOfPages.push(i + 1);
         }
         setPage(arrayOfPages);
+
         setIsReady(true);
       })();
     } catch (error) {
@@ -82,20 +80,18 @@ const OfferPage = (props) => {
     return arrayOfItemsToDisplay;
   };
 
-  if (
-    item?.product_state === false &&
-    !(props.id !== item.owner._id || item.buyer._id)
-  ) {
-    setREdirection(true);
-    setTimeout(() => {
-      navigate("/");
-    }, 5000);
-  }
-  if (!props.userToken) {
-    setTimeout(() => {
-      navigate("/");
-    }, 5000);
-  }
+  const redirection = (value) => {
+    if (
+      item.product_state === false &&
+      !(props.id === value.owner._id || props.id === value.buyer._id)
+    ) {
+      setTimeout(() => {
+        navigate("/");
+      }, 5000);
+      return true;
+    }
+  };
+
   const getShowId = () => {
     const indexOfFirstArticleToShow = (selectedPage - 1) * 8;
 
@@ -107,15 +103,24 @@ const OfferPage = (props) => {
     return ArrayOfitemsToShow;
   };
 
-  return props.userToken ? (
-    isReady === false ? (
-      <div className="loading">
-        <p>Loading, please wait...</p>
-      </div>
-    ) : (
-      <main className={`offer-page ${item.product_state === false && " lock"}`}>
-        <div className="wrapper">
-          <section className="item-pictures small-screen-offer">
+  return isReady === false ? (
+    <div className="loading">
+      <p>Loading, please wait...</p>
+    </div>
+  ) : (
+    <main className={`offer-page ${item.product_state === false && " lock"}`}>
+      <div className="wrapper">
+        <section className="item-pictures small-screen-offer">
+          {images.map((image) => {
+            return (
+              <div key={"item-picture" + image}>
+                <img src={image} alt="image de l'article" />
+              </div>
+            );
+          })}
+        </section>
+        <div>
+          <section className="item-pictures large-screen-offer">
             {images.map((image) => {
               return (
                 <div key={"item-picture" + image}>
@@ -125,283 +130,264 @@ const OfferPage = (props) => {
             })}
           </section>
           <div>
-            <section className="item-pictures large-screen-offer">
-              {images.map((image) => {
-                return (
-                  <div key={"item-picture" + image}>
-                    <img src={image} alt="image de l'article" />
-                  </div>
-                );
-              })}
-            </section>
-            <div>
-              <p>({count}) articles disponibles</p>
-            </div>
-            <section className="owner-offers">
-              {getShowId().map((item) => {
-                const images = getImages(item);
-                const firstimage = images[0];
-
-                return (
-                  <Link
-                    to={`/product/${item._id}`}
-                    key={"owneroffers" + item._id}
-                    className="item-card"
-                  >
-                    <div className="owner">
-                      <div>
-                        {item.owner.avatar?.secure_url ? (
-                          <img
-                            src={item.owner.avatar.secure_url}
-                            alt="avatar du vendeur"
-                          />
-                        ) : (
-                          <div className="icon-standar">
-                            <FontAwesomeIcon icon={faUser} />
-                          </div>
-                        )}
-                      </div>
-                      <p>{item.owner.username}</p>
-                    </div>
-                    <div className="item-image">
-                      <img src={firstimage} alt="image du produit" />
-                    </div>
-                    <div>
-                      <p className="producte-name">{item.product_name}</p>
-                      <p className="info">{item.product_price} €</p>
-                      <p className="info">{item.product_details[0].size}</p>
-                    </div>
-                  </Link>
-                );
-              })}
-              {pages.length !== 1 && (
-                <div className="page-selector">
-                  {pages.map((page) => {
-                    return (
-                      <div
-                        key={page}
-                        className={selectedPage === page ? "selected" : ""}
-                        onClick={() => {
-                          setSelectedPage(page);
-                        }}
-                      >
-                        {page}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </section>
+            <p>({count}) articles disponibles</p>
           </div>
-          <aside>
-            <section>
-              <div className="item-infos">
-                <div className="item-price">
-                  <p>
-                    {item.product_price.toFixed(2).toString().replace(".", ",")}{" "}
-                    €
-                  </p>
-                </div>
-                <div className="item-details">
-                  {item.product_details[0].brand && (
-                    <p>
-                      <span>MARQUE </span>
-                      <span>{item.product_details[0].brand}</span>
-                    </p>
-                  )}
-                  {item.product_details[0].condition && (
-                    <p>
-                      <span>ETAT </span>
-                      <span>{item.product_details[0].condition}</span>
-                    </p>
-                  )}
-                  {item.product_details[0].color && (
-                    <p>
-                      <span>COULEUR </span>
-                      <span>{item.product_details[0].color}</span>
-                    </p>
-                  )}
-                  {item.product_details[0].place && (
-                    <p>
-                      <span>LOCALISATION </span>
-                      <span>{item.product_details[0].place}</span>
-                    </p>
-                  )}
-                  <p>
-                    <span>OPTION DE PAIMENT</span>
-                    <span>CARTE BANCAIRE</span>
-                  </p>
-                  <p>
-                    <span>NOMBRE DE VUE</span>
-                    <span>{item.history.view}</span>
-                  </p>
-                  <p>
-                    <span>AJOUTE</span>
-                    <span>
-                      {format(
-                        new Date(item.history.date_of_creation),
-                        " dd/MM/yyyy"
+          <section className="owner-offers">
+            {getShowId().map((item) => {
+              const images = getImages(item);
+              const firstimage = images[0];
+
+              return (
+                <Link
+                  to={`/product/${item._id}`}
+                  key={"owneroffers" + item._id}
+                  className="item-card"
+                >
+                  <div className="owner">
+                    <div>
+                      {item.owner.avatar?.secure_url ? (
+                        <img
+                          src={item.owner.avatar.secure_url}
+                          alt="avatar du vendeur"
+                        />
+                      ) : (
+                        <div className="icon-standar">
+                          <FontAwesomeIcon icon={faUser} />
+                        </div>
                       )}
-                    </span>
-                  </p>
-                  {item.product_state === false && (
-                    <>
-                      <p className="sold">
-                        <span>STATUT</span>
-                        <span>VENDU</span>
-                      </p>
-                      <p>
-                        <span>ACHETEUR</span>
-                        <span>{item.buyer.username}</span>
-                      </p>
-                      <p>
-                        <span>DATE D'ACHAT</span>
-                        <span>
-                          {format(
-                            new Date(item.history.date_of_purchase),
-                            " dd/MM/yyyy"
-                          )}
-                        </span>
-                      </p>
-                    </>
-                  )}
-                </div>
+                    </div>
+                    <p>{item.owner.username}</p>
+                  </div>
+                  <div className="item-image">
+                    <img src={firstimage} alt="image du produit" />
+                  </div>
+                  <div>
+                    <p className="producte-name">{item.product_name}</p>
+                    <p className="info">{item.product_price} €</p>
+                    <p className="info">{item.product_details[0].size}</p>
+                  </div>
+                </Link>
+              );
+            })}
+            {pages.length !== 1 && (
+              <div className="page-selector">
+                {pages.map((page) => {
+                  return (
+                    <div
+                      key={page}
+                      className={selectedPage === page ? "selected" : ""}
+                      onClick={() => {
+                        setSelectedPage(page);
+                      }}
+                    >
+                      {page}
+                    </div>
+                  );
+                })}
               </div>
-              <div className="item-description">
-                <p>{item.product_description}</p>
-              </div>
-              <div className="item-send-info">
+            )}
+          </section>
+        </div>
+        <aside>
+          <section>
+            <div className="item-infos">
+              <div className="item-price">
                 <p>
-                  <span> envoie</span> <span>a partir de 3,99 €</span>
+                  {item.product_price.toFixed(2).toString().replace(".", ",")} €
                 </p>
               </div>
-              <div className="section-buttons">
-                {item.product_state ? (
-                  <div className="item-buttons">
-                    <Link
-                      to="/Payment"
-                      state={{
-                        title: item.product_name,
-                        price: item.product_price,
-                        id: item._id,
-                      }}
-                    >
-                      Acheter
-                    </Link>
-                    <button>Faire une offre</button>
-                    <button>Message</button>
-                    <button>
-                      <FontAwesomeIcon icon={faHeart} />
-                      &nbsp;Favoris
-                    </button>
-                  </div>
-                ) : (
-                  <div className="item-buttons">
-                    <Link
-                      to="/Payment"
-                      state={{
-                        title: item.product_name,
-                        price: item.product_price,
-                        id: item._id,
-                      }}
-                      className="disabled"
-                      onClick={(event) => {
-                        event.preventDefault();
-                      }}
-                    >
-                      Acheter
-                    </Link>
-                    <button
-                      className="disabled"
-                      onClick={(event) => {
-                        event.preventDefault();
-                      }}
-                    >
-                      Faire une offre
-                    </button>
-                    <button
-                      className="disabled"
-                      onClick={(event) => {
-                        event.preventDefault();
-                      }}
-                    >
-                      Message
-                    </button>
-                    <button
-                      className="disabled"
-                      onClick={(event) => {
-                        event.preventDefault();
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faHeart} />
-                      &nbsp;Favoris
-                    </button>
-                  </div>
-                )}
-              </div>
-              <div className="item-protect-customer">
-                <div>
-                  <FontAwesomeIcon icon={faShieldHeart} />
-                </div>
-                <div>
-                  <h3>Frais de Protection acheteurs</h3>
+              <div className="item-details">
+                {item.product_details[0].brand && (
                   <p>
-                    Pour tout achat effectué par le biais du bouton "Acheter",
-                    nous appliquons des frais couvrant notre{" "}
-                    <a href="#">protection acheteurs</a> . Cette protection
-                    acheteurs comprend notre
-                    <a href="#">Politique de remboursement</a>.
+                    <span>MARQUE </span>
+                    <span>{item.product_details[0].brand}</span>
                   </p>
-                </div>
-              </div>
-            </section>
-            <section>
-              <div>
-                {item.owner.avatar?.secure_url ? (
-                  <div>
-                    <img
-                      src={item.owner.avatar.secure_url}
-                      alt="avatar du vendeur"
-                    />
-                  </div>
-                ) : (
-                  <div className="icon-standar">
-                    <FontAwesomeIcon icon={faUser} />
-                  </div>
                 )}
-
-                <p>{item.owner.username}</p>
+                {item.product_details[0].condition && (
+                  <p>
+                    <span>ETAT </span>
+                    <span>{item.product_details[0].condition}</span>
+                  </p>
+                )}
+                {item.product_details[0].color && (
+                  <p>
+                    <span>COULEUR </span>
+                    <span>{item.product_details[0].color}</span>
+                  </p>
+                )}
+                {item.product_details[0].place && (
+                  <p>
+                    <span>LOCALISATION </span>
+                    <span>{item.product_details[0].place}</span>
+                  </p>
+                )}
+                <p>
+                  <span>OPTION DE PAIMENT</span>
+                  <span>CARTE BANCAIRE</span>
+                </p>
+                <p>
+                  <span>NOMBRE DE VUE</span>
+                  <span>{item.history.view}</span>
+                </p>
+                <p>
+                  <span>AJOUTE</span>
+                  <span>
+                    {format(
+                      new Date(item.history.date_of_creation),
+                      " dd/MM/yyyy"
+                    )}
+                  </span>
+                </p>
+                {item.product_state === false && (
+                  <>
+                    <p className="sold">
+                      <span>STATUT</span>
+                      <span>VENDU</span>
+                    </p>
+                    <p>
+                      <span>ACHETEUR</span>
+                      <span>{item.buyer.username}</span>
+                    </p>
+                    <p>
+                      <span>DATE D'ACHAT</span>
+                      <span>
+                        {format(
+                          new Date(item.history.date_of_purchase),
+                          " dd/MM/yyyy"
+                        )}
+                      </span>
+                    </p>
+                  </>
+                )}
               </div>
-            </section>
-          </aside>
-        </div>
-        {redirection && (
-          <section
-            className="modal"
-            onClick={(event) => {
-              navigate("/");
-            }}
-          >
-            <div
-              className="modal-offer-redirection"
-              onClick={(event) => {
-                event.stopPropagation();
-              }}
-            >
-              <p>OoouuupS...Cet article a été victime de son succes!</p>
-              <Link to="/">Home</Link>
+            </div>
+            <div className="item-description">
+              <p>{item.product_description}</p>
+            </div>
+            <div className="item-send-info">
+              <p>
+                <span> envoie</span> <span>a partir de 3,99 €</span>
+              </p>
+            </div>
+            <div className="section-buttons">
+              {item.product_state ? (
+                <div className="item-buttons">
+                  <Link
+                    to="/Payment"
+                    state={{
+                      title: item.product_name,
+                      price: item.product_price,
+                      id: item._id,
+                    }}
+                  >
+                    Acheter
+                  </Link>
+                  <button>Faire une offre</button>
+                  <button>Message</button>
+                  <button>
+                    <FontAwesomeIcon icon={faHeart} />
+                    &nbsp;Favoris
+                  </button>
+                </div>
+              ) : (
+                <div className="item-buttons">
+                  <Link
+                    to="/Payment"
+                    state={{
+                      title: item.product_name,
+                      price: item.product_price,
+                      id: item._id,
+                    }}
+                    className="disabled"
+                    onClick={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    Acheter
+                  </Link>
+                  <button
+                    className="disabled"
+                    onClick={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    Faire une offre
+                  </button>
+                  <button
+                    className="disabled"
+                    onClick={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    Message
+                  </button>
+                  <button
+                    className="disabled"
+                    onClick={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faHeart} />
+                    &nbsp;Favoris
+                  </button>
+                </div>
+              )}
+            </div>
+            <div className="item-protect-customer">
+              <div>
+                <FontAwesomeIcon icon={faShieldHeart} />
+              </div>
+              <div>
+                <h3>Frais de Protection acheteurs</h3>
+                <p>
+                  Pour tout achat effectué par le biais du bouton "Acheter",
+                  nous appliquons des frais couvrant notre
+                  <a href="#"> protection acheteurs</a> . Cette protection
+                  acheteurs comprend notre
+                  <a href="#">Politique de remboursement</a>.
+                </p>
+              </div>
             </div>
           </section>
-        )}
-      </main>
-    )
-  ) : (
-    <div className="not-connected">
-      <p>
-        OOUUUuuuuupppssss! Vous n'est pas connecté(e) vous allez etre
-        redirigé(e) automatiquement vers la page d'accueil...
-      </p>
-    </div>
+          <section>
+            <div>
+              {item.owner.avatar?.secure_url ? (
+                <div>
+                  <img
+                    src={item.owner.avatar.secure_url}
+                    alt="avatar du vendeur"
+                  />
+                </div>
+              ) : (
+                <div className="icon-standar">
+                  <FontAwesomeIcon icon={faUser} />
+                </div>
+              )}
+
+              <p>{item.owner.username}</p>
+            </div>
+          </section>
+        </aside>
+      </div>
+      {redirection(item) && (
+        <section
+          className="modal"
+          onClick={(event) => {
+            navigate("/");
+          }}
+        >
+          <div
+            className="modal-offer-redirection"
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <p>OoouuupS...Cet article a été victime de son succes!</p>
+            <Link to="/">Home</Link>
+          </div>
+        </section>
+      )}
+    </main>
   );
 };
 

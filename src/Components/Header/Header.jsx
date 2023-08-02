@@ -1,5 +1,5 @@
 import "./header.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../../assets/Images/logoVinted.svg";
 import ModalSignUp from "../ModalSignUp/ModalSignUp";
 import ModalLogin from "../ModalLogin/ModalLogin";
@@ -10,7 +10,6 @@ import Toggle from "../Toggle/Toggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 const Header = (props) => {
-  const location = useLocation();
   const navigate = useNavigate();
   const [displayModal, setDisplayModal] = useState(false);
   const [signup, setSignup] = useState(false);
@@ -18,7 +17,6 @@ const Header = (props) => {
   const [searchArticle, setSearchArticle] = useState("");
   const [isChecked, setIsCheked] = useState(false);
   const [smallScreenModal, setSmallScreenModal] = useState(false);
-  const [path, setPath] = useState("/");
 
   useEffect(() => {
     if (displayModal || smallScreenModal) {
@@ -203,7 +201,6 @@ const Header = (props) => {
       {displayModal ? (
         signup ? (
           <ModalSignUp
-            path={path}
             setDisplayModal={setDisplayModal}
             displayModal={displayModal}
             serverURI={props.serverURI}
@@ -219,7 +216,6 @@ const Header = (props) => {
           />
         ) : (
           <ModalLogin
-            path={path}
             setUserToken={props.setUserToken}
             userToken={props.userToken}
             setDisplayModal={setDisplayModal}

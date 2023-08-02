@@ -88,7 +88,11 @@ export default function Publish({ userToken, serverURI }) {
       setErrorMessage("Veuillez remplire tous les Champs.");
     }
   };
-
+  if (!userToken) {
+    setTimeout(() => {
+      navigate("/");
+    }, 5000);
+  }
   return userToken ? (
     <main className="publish">
       <form
@@ -249,6 +253,11 @@ export default function Publish({ userToken, serverURI }) {
       </form>
     </main>
   ) : (
-    <Navigate to="/" state={{ from: "/Publish" }} />
+    <div className="not-connected">
+      <p>
+        OOUUUuuuuupppssss! Vous n'est pas connecté(e) vous allez etre
+        redirigé(e) automatiquement vers la page d'accueil...
+      </p>
+    </div>
   );
 }
