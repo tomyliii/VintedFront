@@ -20,7 +20,7 @@ export default function DragAndDropSingUp(props) {
   useEffect(() => {
     props.setFile([...arrayOfImages]);
   }, [arrayOfImages]);
-  console.log("OKKKK");
+
   const handleOnClickDeletPicutre = (event, value) => {
     event.stopPropagation();
 

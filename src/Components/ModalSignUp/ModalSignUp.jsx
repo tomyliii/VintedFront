@@ -127,24 +127,23 @@ const Modal = (props) => {
       formData.append("newsLetter", newsLetter);
 
       for (let i = 0; i < file.length; i++) {
-        formData.append("productImg", file[i], formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        formData.append("productImg", file[i]);
       }
       try {
-        const response = await axios.post(`${props.serverURI}/user/signup`, {
-          newsletter: newsLetter,
-          name: username,
-          mail: mail,
-          password: password,
-        });
+        const response = await axios.post(
+          `${props.serverURI}/user/signup`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         Cookies.set("token", response.data.token, 1, { secure: true });
         Cookies.set("username", response.data.account.username, 1, {
           secure: true,
         });
-        console.log(response.data);
+
         Cookies.set("id", response.data._id, 1, { secure: true });
         props.setId(response.data._id);
         props.setDisplayModal(!props.displayModal);
